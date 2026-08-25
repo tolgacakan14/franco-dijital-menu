@@ -111,6 +111,14 @@ footer .instagram-cta { grid-column: 1 / -1; width: 100%; display: grid; grid-te
 .instagram-cta strong { font-size: 16px; font-weight: 500; letter-spacing: .04em; }
 .instagram-cta b { grid-column: 2; grid-row: 1 / 3; font-size: 25px; font-weight: 400; transition: transform .2s ease; }
 .instagram-cta:hover b { transform: translate(4px,-4px); }
+.designer-credit-trigger { grid-column: 1 / -1; width: fit-content; margin: 15px auto 0; padding: 3px 0; border: 0; border-bottom: 1px solid transparent; background: transparent; color: rgba(240,223,203,.34); font-size: 7px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; transition: color .2s, border-color .2s; }
+.designer-credit-trigger:hover { color: rgba(240,223,203,.68); border-color: rgba(240,223,203,.24); }
+.designer-credit-backdrop { position: fixed; inset: 0; z-index: 80; display: grid; place-items: end center; padding: 20px; background: rgba(73,23,27,.22); backdrop-filter: blur(3px); animation: room-in .25s ease both; }
+.designer-label { position: relative; width: min(260px, 86vw); display: grid; justify-items: center; gap: 8px; margin-bottom: max(8px, env(safe-area-inset-bottom)); padding: 29px 26px 25px; border: 1px solid rgba(73,23,27,.5); outline: 1px dashed rgba(73,23,27,.22); outline-offset: -7px; border-radius: 2px; background: var(--paper); color: var(--wine); box-shadow: 0 18px 50px rgba(73,23,27,.2); transform: rotate(-.5deg); }
+.designer-label::before { content: ""; position: absolute; top: 8px; width: 22px; height: 3px; border-top: 1px solid rgba(73,23,27,.25); border-bottom: 1px solid rgba(73,23,27,.25); }
+.designer-label strong { font: italic 17px/1 Georgia, serif; font-weight: 400; }
+.designer-label a { color: var(--sun); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-decoration: none; }
+.designer-label-close { position: absolute; right: 8px; top: 7px; width: 22px; height: 22px; border: 0; background: transparent; color: rgba(73,23,27,.45); font: 16px/1 Arial, sans-serif; }
 
 .search-room { position: fixed; inset: 0; z-index: 50; overflow-y: auto; padding: 38px 20px 20px; border: 10px solid var(--wine-deep); background: radial-gradient(circle at 80% 20%, rgba(255,255,255,.2), transparent 28%), var(--paper); color: var(--ink); animation: room-in .42s cubic-bezier(.7,0,.2,1) both; }
 .search-room::before { content: "Franco"; position: absolute; right: -20px; bottom: 0; color: rgba(77,48,41,.045); font: 120px/1 "Snell Roundhand", "Segoe Script", cursive; transform: rotate(-8deg); }
