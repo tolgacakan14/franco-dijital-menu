@@ -28,20 +28,27 @@ function findProduct(name: string): SceneProduct {
   return { product: menu[0].products[0], category: menu[0], index: 0 };
 }
 
+const scoopPalettes: Record<string, [string, string, string]> = {
+  "Sütlü": ["#f4ead8", "#c5b49a", "#fffaf0"],
+  "Kakao": ["#79503d", "#3c241d", "#b77b5c"],
+  "Karamel": ["#d4974f", "#8b5026", "#f3c780"],
+  "Tahin": ["#cdb995", "#8f7658", "#eee0bd"],
+  "İtalyan Karameli": ["#bb6d38", "#6b341f", "#e9a86b"],
+  "Bal Badem": ["#e1b86b", "#9f6e35", "#f5dca9"],
+  "Vişne": ["#b13f56", "#641f35", "#e78898"],
+  "Çilek": ["#ed8691", "#b73c50", "#ffd0d1"],
+  "Oreo": ["#6a6762", "#242321", "#ddd5ca"],
+  "Kavun": ["#efb85f", "#bd7139", "#ffe1a2"],
+  "Limon": ["#ead94c", "#a89a23", "#fff59b"],
+  "Yeşil Elma": ["#a8c958", "#56782e", "#dbef96"],
+  "İncir&Ceviz": ["#9e7280", "#5f414b", "#d1a5a9"],
+  "Lotus": ["#c56f3c", "#76391f", "#eca270"],
+  "Böğürtlen": ["#70466f", "#38263e", "#aa78a8"],
+  "Antep Fıstığı": ["#93aa67", "#52673a", "#cbd89f"]
+};
+
 function scoopStyle(flavor: string, index: number): CSSProperties {
-  const name = flavor.toLocaleLowerCase("tr-TR");
-  let palette = ["#f3dfc4", "#d9b98e", "#fff3dc"];
-  if (name.includes("kakao") || name.includes("oreo")) palette = ["#76503f", "#3d2925", "#b98362"];
-  else if (name.includes("çilek")) palette = ["#eaa2a0", "#bd5f68", "#ffd3c8"];
-  else if (name.includes("vişne")) palette = ["#b95967", "#713344", "#e99696"];
-  else if (name.includes("böğürtlen")) palette = ["#75506c", "#4a3149", "#b78aa8"];
-  else if (name.includes("fıstık") || name.includes("elma")) palette = ["#b8bd83", "#768252", "#e0d7a5"];
-  else if (name.includes("limon")) palette = ["#e9d77a", "#b9a63e", "#fff0a6"];
-  else if (name.includes("kavun")) palette = ["#e7bd72", "#bc8548", "#f5dca0"];
-  else if (name.includes("karamel") || name.includes("lotus")) palette = ["#c78b58", "#8e5838", "#edbd7e"];
-  else if (name.includes("tahin")) palette = ["#d8c09d", "#aa8764", "#f2dfbd"];
-  else if (name.includes("incir") || name.includes("ceviz")) palette = ["#b69783", "#71564c", "#d9bd9e"];
-  else if (name.includes("badem")) palette = ["#dfc698", "#ad8557", "#f4dfb4"];
+  const palette = scoopPalettes[flavor] ?? ["#f3dfc4", "#d9b98e", "#fff3dc"];
   return { "--scoop-main": palette[0], "--scoop-deep": palette[1], "--scoop-light": palette[2], "--scoop-x": `${index % 2 ? 6 : -5}px`, "--scoop-tilt": `${index % 2 ? 3 : -3}deg`, "--scoop-level": index } as CSSProperties;
 }
 
@@ -105,7 +112,7 @@ export default function Home() {
     <section className="menu-stage" key={active.id}><div className="chapter-head"><span className="chapter-number">{String(activeIndex + 1).padStart(2, "0")}</span><div><p>{active.eyebrow}</p><h2>{active.name}</h2></div><span className="chapter-mark" aria-hidden="true">{active.icon}</span></div><div className="menu-board">{active.products.map((product, index) => <article className={`menu-line art-style-${(index + activeIndex) % 4}`} key={product.id}><button className="product-open" onClick={() => setScene({ product, category: active, index })} aria-label={`${product.name} detayını aç`}><div className={`product-art ${sprite ? "has-photo" : ""}`} style={artStyle(active, index)} aria-hidden="true">{!sprite && <span>{product.name.slice(0, 2).toLocaleUpperCase("tr-TR")}</span>}{!sprite && <small>FRANCO · {String(index + 1).padStart(2, "0")}</small>}{favorites.includes(product.id) && <b className="favorite-dot">♥</b>}</div><div className="product-info"><h3>{product.name}</h3><p>{active.eyebrow}</p><strong>{money.format(product.price)}</strong></div></button></article>)}</div><button className="next-chapter" onClick={() => selectCategory((activeIndex + 1) % menu.length)}><span>Sıradaki bölüm</span><strong>{menu[(activeIndex + 1) % menu.length].name}</strong><b aria-hidden="true">→</b></button></section>
 
     <aside className="marquee" aria-label="Franco sloganı"><div>COFFEE <span>✦</span> GELATO <span>✦</span> GOOD TIMES <span>✦</span> FRANCO <span>✦</span> COFFEE <span>✦</span> GELATO <span>✦</span></div></aside>
-    <footer><div className="footer-seal"><span>F</span><small>EST. · 2024</small></div><div><p>Franco Coffee &amp; Gelato</p><small>Fiyatlara KDV dahildir. Alerjen bilgileri için ekibimize danışabilirsiniz.</small></div><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram ↗</a></footer>
+    <footer><div className="footer-seal"><span>F</span><small>EST. · 2024</small></div><div><p>Franco Coffee &amp; Gelato</p><small>Fiyatlara KDV dahildir. Alerjen bilgileri için ekibimize danışabilirsiniz.</small></div><a className="instagram-cta" href="https://www.instagram.com/francoserdivan/" target="_blank" rel="noreferrer" aria-label="Franco Serdivan Instagram hesabını aç"><span>Bizi Instagram’dan takip edin</span><strong>@francoserdivan</strong><b aria-hidden="true">↗</b></a></footer>
 
     {scene && <ProductScene item={scene} pair={pairingFor(scene)} favorites={favorites} close={() => setScene(null)} select={setScene} toggleFavorite={toggleFavorite} />}
     {panel === "journey" && <section className="experience-room journey-room" role="dialog" aria-modal="true" aria-label="Franco Lezzet Yolculuğu"><RoomNav title="FRANCO · LEZZET YOLCULUĞU" close={() => setPanel(null)} />{!journeyResult ? <div className="journey-step"><small>0{journeyStep + 1} / 03</small><div className="journey-progress"><i style={{ width: `${(journeyStep + 1) * 33.333}%` }} /></div><h2>{journeyQuestions[journeyStep].title}</h2><div className="journey-options">{journeyQuestions[journeyStep].options.map(([label, value]) => <button key={value} onClick={() => answerJourney(journeyQuestions[journeyStep].key, value)}>{label}<span>→</span></button>)}</div></div> : <div className="journey-result"><small>Franco senin için seçti</small><h2>{journeyResult.product.name}</h2><p>Bugünkü ritmine ve damak zevkine en yakın Franco seçimi.</p><strong>{money.format(journeyResult.product.price)}</strong><button onClick={() => { setPanel(null); setScene(journeyResult); }}>Ürünü sahneye al →</button><button className="text-button" onClick={() => { setJourneyStep(0); setAnswers({}); setJourneyResult(null); }}>Baştan dene</button></div>}</section>}
