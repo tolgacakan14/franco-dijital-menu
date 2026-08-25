@@ -4,8 +4,8 @@
   "description": "Franco Coffee & Gelato dijital menüsü",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f6efdf",
-  "theme_color": "#651f26",
+  "background_color": "#f0dfcb",
+  "theme_color": "#49171B",
   "lang": "tr",
   "icons": []
 }

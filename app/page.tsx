@@ -98,7 +98,7 @@ export default function Home() {
   const gelato = menu.find(category => category.id === "dondurma")!;
 
   return <main className="site-shell">
-    <header className="masthead"><div className="hero-lockup"><h1><img className="brand-wordmark" src="/franco-wordmark-v3.png" alt="Franco" width="1697" height="927" /></h1><p className="hero-subline" aria-label="Coffee Gelato"><span>COFFEE</span><span>GELATO</span></p><span className="hero-divider" aria-hidden="true" /><p className="hero-slogan">BECAUSE ONE TREAT<br />IS NEVER ENOUGH</p></div></header>
+    <header className="masthead"><h1 className="official-brand-lockup"><img className="official-brand-artwork" src="/franco-brand-official.jpg" alt="Franco Coffee Gelato — Because one treat is never enough" width="2584" height="2613" /></h1></header>
 
     <section className="rhythm-card" aria-label="Günün Franco seçkisi"><div><small>{rhythm.eyebrow}</small><h2>{rhythm.title}</h2><p>{rhythm.copy}</p></div><button onClick={() => setScene(findProduct(rhythm.product))}>Seçkiyi gör <span>↗</span></button></section>
     <section className="experience-strip" aria-label="Franco deneyimleri">
