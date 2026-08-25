@@ -1,0 +1,11 @@
+{
+  "name": "Franco Coffee & Gelato Menü",
+  "short_name": "Franco Menü",
+  "description": "Franco Coffee & Gelato dijital menüsü",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6efdf",
+  "theme_color": "#651f26",
+  "lang": "tr",
+  "icons": []
+}
