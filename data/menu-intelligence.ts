@@ -122,7 +122,9 @@ export function evaluateGelato(flavors: string[]) {
   const profiles = flavors.map(flavor => gelatoProfiles[flavor]).filter(Boolean);
   if (profiles.length < 2) return null;
   let score = 0;
-  for (let i = 0; i < profiles.length; i++) for (let j = i + 1; j < profiles.length; j++) score += affinity(profiles[i].family, profiles[j].family);
+  let pairCount = 0;
+  for (let i = 0; i < profiles.length; i++) for (let j = i + 1; j < profiles.length; j++) { score += affinity(profiles[i].family, profiles[j].family); pairCount += 1; }
+  score = score * 3 / pairCount;
   const totalSweet = profiles.reduce((sum, profile) => sum + profile.sweet, 0);
   const totalAcid = profiles.reduce((sum, profile) => sum + profile.acid, 0);
   const totalRich = profiles.reduce((sum, profile) => sum + profile.rich, 0);
@@ -133,8 +135,9 @@ export function evaluateGelato(flavors: string[]) {
   const title = score >= 11 ? "Usta işi kontrast" : score >= 8 ? "Katmanlı ve rafine" : score >= 6 ? "Dengeli uyum" : "Cesur bir seçim";
   const bright = profiles.find(profile => profile.acid >= 3);
   const anchor = [...profiles].sort((a, b) => b.rich - a.rich)[0];
+  const bridge = profiles.length === 2 ? "İki aroma birbirini net biçimde tamamlıyor." : profiles.length === 3 ? "Üçüncü tat geçişi yumuşatıyor." : "Diğer iki tat geçişi katmanlandırıyor.";
   const detail = bright && anchor !== bright
-    ? `${bright.role}, ${anchor.role} karşısında damağı tazeliyor; üçüncü tat geçişi yumuşatıyor.`
+    ? `${bright.role}, ${anchor.role} karşısında damağı tazeliyor. ${bridge}`
     : totalSweet >= profiles.length * 3.5
       ? `${anchor.role} merkezde. Tatlılık yüksek olduğu için sade kahveyle daha dengeli ilerler.`
       : `${anchor.role} birleşimin omurgası; diğer tatlar aromayı katmanlandırıyor.`;

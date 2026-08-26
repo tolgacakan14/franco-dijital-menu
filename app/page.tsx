@@ -96,7 +96,7 @@ export default function Home() {
   const pairingFor = (item: SceneProduct) => findProduct(item.product.pairing ?? (item.category.id === "tatlilar" ? "Americano" : "Tiramisu"));
   const toggleFavorite = (id: string) => setFavorites(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
   const selectScoop = (flavor: string) => {
-    setScoops(current => current.includes(flavor) ? current.filter(name => name !== flavor) : current.length < 3 ? [...current, flavor] : current);
+    setScoops(current => current.includes(flavor) ? current.filter(name => name !== flavor) : current.length < 4 ? [...current, flavor] : current);
     setServingTurn(turn => turn + 1);
   };
   const favoriteProducts = menu.flatMap(category => category.products.map((product, index) => ({ product, category, index }))).filter(item => favorites.includes(item.product.id));
@@ -142,10 +142,10 @@ export default function Home() {
           <strong>{money.format(scoops.length * 80)}</strong>
         </div>
         <div className="flavor-picker">
-          <div className="composer-status"><small>{scoops.length} / 3 LEZZET SEÇİLDİ</small>{scoops.length > 0 && <button onClick={() => setScoops([])}>Temizle</button>}</div>
+          <div className="composer-status"><small>{scoops.length} / 4 LEZZET SEÇİLDİ</small>{scoops.length > 0 && <button onClick={() => setScoops([])}>Temizle</button>}</div>
           <h2>Dondurmanı oluştur</h2>
-          <div className="flavor-grid">{gelato.products.map(product => { const selected = scoops.includes(product.name); return <button key={product.id} className={selected ? "selected" : ""} aria-pressed={selected} disabled={!selected && scoops.length >= 3} onClick={() => selectScoop(product.name)}>{product.name}<span>{selected ? "✓" : "+"}</span></button>; })}</div>
-          {scoops.length === 3 && <p className="limit-note">Üç lezzet tamamlandı. Yeni bir tat için seçtiklerinden birini çıkar.</p>}
+          <div className="flavor-grid">{gelato.products.map(product => { const selected = scoops.includes(product.name); return <button key={product.id} className={selected ? "selected" : ""} style={scoopStyle(product.name, 0)} aria-pressed={selected} disabled={!selected && scoops.length >= 4} onClick={() => selectScoop(product.name)}><i className="flavor-swatch" aria-hidden="true" /><b>{product.name}</b><span>{selected ? "✓" : "+"}</span></button>; })}</div>
+          {scoops.length === 4 && <p className="limit-note">Dört lezzet tamamlandı. Yeni bir tat için seçtiklerinden birini çıkar.</p>}
           {gelatoMatch && <div className="composer-note"><span>Franco uyumu</span><b>{gelatoMatch.title}</b><p>{gelatoMatch.detail}</p></div>}
         </div>
       </div>
