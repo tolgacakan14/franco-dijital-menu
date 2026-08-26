@@ -121,6 +121,7 @@ const affinity = (a: GelatoFamily, b: GelatoFamily) => {
 export function evaluateGelato(flavors: string[]) {
   const profiles = flavors.map(flavor => gelatoProfiles[flavor]).filter(Boolean);
   if (profiles.length < 2) return null;
+  if (new Set(flavors).size === 1) return { title: "Tek tat, net karakter", detail: `${profiles[0].role}, ${profiles.length} top boyunca kesintisiz ve belirgin bir profil sunuyor.` };
   let score = 0;
   let pairCount = 0;
   for (let i = 0; i < profiles.length; i++) for (let j = i + 1; j < profiles.length; j++) { score += affinity(profiles[i].family, profiles[j].family); pairCount += 1; }

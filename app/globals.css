@@ -222,6 +222,7 @@ footer .instagram-cta { grid-column: 1 / -1; width: 100%; display: grid; grid-te
 /* Integrated gelato composition: the vessel masks the lower edge of every scoop. */
 .scoop-stack { width: 190px; height: 285px; display: block; }
 .scoop-stack .graphic-scoop {
+  padding: 0;
   position: absolute;
   left: 50%;
   bottom: calc(92px + (var(--scoop-level) * 54px));
@@ -262,6 +263,7 @@ footer .instagram-cta { grid-column: 1 / -1; width: 100%; display: grid; grid-te
 .scoop-stack .graphic-scoop::before { inset: 7px 12px auto; height: 18px; border-top: 1px solid rgba(255,255,255,.48); }
 .scoop-stack .graphic-scoop::after { left: 9px; right: 9px; bottom: -5px; height: 11px; }
 .scoop-stack .graphic-scoop span { top: 48%; max-width: 66px; color: rgba(73,23,27,.64); font-size: 7px; }
+.scoop-stack .graphic-scoop:focus-visible { outline: 2px solid var(--paper-light); outline-offset: 3px; }
 .scoop-stack.cup .graphic-scoop { bottom: calc(50px + (var(--scoop-level) * 39px)); }
 .serving-piece {
   z-index: 10;

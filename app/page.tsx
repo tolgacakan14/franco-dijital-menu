@@ -96,7 +96,11 @@ export default function Home() {
   const pairingFor = (item: SceneProduct) => findProduct(item.product.pairing ?? (item.category.id === "tatlilar" ? "Americano" : "Tiramisu"));
   const toggleFavorite = (id: string) => setFavorites(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
   const selectScoop = (flavor: string) => {
-    setScoops(current => current.includes(flavor) ? current.filter(name => name !== flavor) : current.length < 4 ? [...current, flavor] : current);
+    setScoops(current => current.length < 4 ? [...current, flavor] : current);
+    setServingTurn(turn => turn + 1);
+  };
+  const removeScoop = (index: number) => {
+    setScoops(current => current.filter((_, scoopIndex) => scoopIndex !== index));
     setServingTurn(turn => turn + 1);
   };
   const favoriteProducts = menu.flatMap(category => category.products.map((product, index) => ({ product, category, index }))).filter(item => favorites.includes(item.product.id));
@@ -134,17 +138,17 @@ export default function Home() {
             <button className={vessel === "cup" ? "active" : ""} onClick={() => setVessel("cup")}>Kase</button>
           </div>
           <div className={`scoop-stack ${vessel} turn-${servingTurn % 2}`} aria-live="polite">
-            {scoops.map((flavor, index) => <i className="graphic-scoop" key={`${flavor}-${index}`} style={scoopStyle(flavor, index)} aria-label={flavor}><span>{flavor}</span></i>)}
+            {scoops.map((flavor, index) => <button className="graphic-scoop" key={`${flavor}-${index}`} style={scoopStyle(flavor, index)} onClick={() => removeScoop(index)} aria-label={`${flavor} topunu çıkar`}><span>{flavor}</span></button>)}
             <button className={`serving-piece ${vessel}`} onClick={() => setServingTurn(turn => turn + 1)} aria-label={`${vessel === "cone" ? "Külahı" : "Kaseyi"} döndür`}><em>Franco</em></button>
           </div>
-          <span className="tap-hint">Dokun ve çevir</span>
+          <span className="tap-hint">Topa dokun: çıkar · Sunuma dokun: çevir</span>
           <p>{scoops.length ? scoops.join(" + ") : "İlk lezzetini seç"}</p>
           <strong>{money.format(scoops.length * 80)}</strong>
         </div>
         <div className="flavor-picker">
           <div className="composer-status"><small>{scoops.length} / 4 LEZZET SEÇİLDİ</small>{scoops.length > 0 && <button onClick={() => setScoops([])}>Temizle</button>}</div>
           <h2>Dondurmanı oluştur</h2>
-          <div className="flavor-grid">{gelato.products.map(product => { const selected = scoops.includes(product.name); return <button key={product.id} className={selected ? "selected" : ""} style={scoopStyle(product.name, 0)} aria-pressed={selected} disabled={!selected && scoops.length >= 4} onClick={() => selectScoop(product.name)}><i className="flavor-swatch" aria-hidden="true" /><b>{product.name}</b><span>{selected ? "✓" : "+"}</span></button>; })}</div>
+          <div className="flavor-grid">{gelato.products.map(product => { const count = scoops.filter(flavor => flavor === product.name).length; return <button key={product.id} className={count ? "selected" : ""} style={scoopStyle(product.name, 0)} aria-label={`${product.name} topu ekle${count ? `, seçili ${count}` : ""}`} aria-pressed={count > 0} disabled={scoops.length >= 4} onClick={() => selectScoop(product.name)}><i className="flavor-swatch" aria-hidden="true" /><b>{product.name}</b><span>{count ? `×${count}` : "+"}</span></button>; })}</div>
           {scoops.length === 4 && <p className="limit-note">Dört lezzet tamamlandı. Yeni bir tat için seçtiklerinden birini çıkar.</p>}
           {gelatoMatch && <div className="composer-note"><span>Franco uyumu</span><b>{gelatoMatch.title}</b><p>{gelatoMatch.detail}</p></div>}
         </div>
