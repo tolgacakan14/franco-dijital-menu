@@ -12,24 +12,32 @@ Mobil öncelikli, hızlı ve kolay güncellenebilir dijital menü. Menü içeri�
 - Harici görsel/font bağımlılığı olmadan hızlı ilk yükleme
 - Vercel uyumlu Next.js projesi
 
-> Bu repodaki ürünler ve fiyatlar örnek içeriktir. Yayından önce işletmenin güncel menüsüyle doğrulanmalıdır.
+> Ürün adları ve fiyatlar 25 Ağustos 2026 tarihinde Franco'nun QRall menüsünden aktarılmıştır. İşletme reçeteleri paylaşılmadığı için açıklamalar içerik/alerjen beyanı değil, ürün adları ve standart içecek tanımları üzerinden hazırlanmış duyusal tanımlardır. Fiyatlar, reçeteler ve alerjenler yayından önce işletmeyle doğrulanmalıdır.
 
 ## Menüyü güncelleme
 
-Tüm kategoriler ve ürünler `data/menu.ts` içindedir. Yeni ürün eklemek için ilgili kategorinin `products` listesine şu yapıda bir kayıt ekleyin:
+Kategori, ürün adı ve fiyatlar `data/menu.ts`; açıklama, tat profili, yoğunluk, eşleştirme ve gelato motoru `data/menu-intelligence.ts` içindedir.
+
+Yeni bir ürün eklerken `data/menu.ts` içindeki ilgili kategoriye `["Ürün adı", 150]` kaydı ekleyin. Ardından aynı ürün adıyla `productKnowledge` kaydı oluşturun:
 
 ```ts
-{
-  id: "benzersiz-kisa-ad",
-  name: "Ürün adı",
+"Ürün adı": {
   description: "Kısa ürün açıklaması.",
-  price: 150,
-  badge: "Yeni",              // isteğe bağlı
-  tags: ["Vejetaryen"]       // isteğe bağlı
+  profile: "Kakao · kavruk",
+  intensity: 3,
+  pairing: "Eşleşecek mevcut ürün"
 }
 ```
 
-`id` değerleri benzersiz olmalı, fiyat yalnızca sayı olarak yazılmalıdır. Değişiklikten sonra siteyi yeniden deploy edin.
+Eşleştirilen ürün adı menüde birebir bulunmalıdır. Gelato eklenirse ayrıca `gelatoProfiles` kaydı gerekir. Değişiklikten sonra siteyi yeniden deploy edin.
+
+## Duyusal sistemin dayanakları
+
+- Kahve tat dili: [World Coffee Research Sensory Lexicon](https://worldcoffeeresearch.org/resources/sensory-lexicon) ve [SCA Coffee Taster's Flavor Wheel](https://sca.coffee/store)
+- Gelato dengesi: [Carpigiani — Balancing Gelato](https://foodservice.carpigiani.com/en/how-to-balance-mixes-to-perfection-when-making-artisanal-gelato) ve [Carpigiani — Gelato as a balance of opposites](https://www.carpigiani.com/en/news/OldaniBalanceENG)
+- Çikolata eşleşmeleri: [Valrhona profesyonel tarif ve eşleşme yaklaşımı](https://www.valrhona.com/en/inspiring-you/recipes/all-our-recipes)
+
+Bu kaynaklar duyusal sınıflandırmayı destekler; Franco'nun reçetelerini temsil etmez. Reçeteye özgü içerik ve alerjen bilgisi yalnızca işletmenin onaylı ürün föyünden eklenmelidir.
 
 ## Local çalıştırma
 
