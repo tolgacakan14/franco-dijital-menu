@@ -15,7 +15,7 @@ const sprites: Record<string, { src: string; columns: number; rows: number }> = 
   "dondurmali-milkshake": { src: "/menu-milkshake-sprite-v2.jpg", columns: 2, rows: 2 },
   tatlilar: { src: "/menu-dessert-sprite-v2.jpg", columns: 4, rows: 3 }
 };
-const spriteSources = [...new Set(Object.values(sprites).map(sprite => sprite.src))];
+const spriteSources = Array.from(new Set(Object.values(sprites).map(sprite => sprite.src)));
 type SceneProduct = { product: Product; category: Category; index: number };
 type Panel = "journey" | "composer" | "passport" | null;
 const journeyQuestions = [
