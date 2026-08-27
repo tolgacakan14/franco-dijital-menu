@@ -29,6 +29,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="tr">
+      <head>
+        <link rel="preload" as="image" href="/menu-hot-coffee-sprite-v2.jpg" fetchPriority="high" />
+      </head>
       <body>{children}</body>
     </html>
   );

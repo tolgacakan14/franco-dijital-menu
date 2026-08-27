@@ -130,6 +130,7 @@ footer .instagram-cta { grid-column: 1 / -1; width: 100%; display: grid; grid-te
 .scene-close { position: fixed; right: 16px; top: 17px; z-index: 2; }
 .scene-art { width: 100%; aspect-ratio: 1; display: grid; place-items: center; background: linear-gradient(145deg,#ead7cc,#f7e8df); background-position: center; background-repeat: no-repeat; image-rendering: auto; }
 .scene-art.has-photo { background-color: #f1dfd8; }
+.scene-image-priority { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .scene-art > span { font: italic 90px/1 Georgia,serif; color: rgba(56,36,31,.5); }
 .scene-copy { position: relative; z-index: 1; margin-top: -22px; padding: 32px 22px 20px; border-radius: 26px 26px 0 0; background: #f7eee8; box-shadow: 0 -14px 35px rgba(56,36,31,.06); }
 .scene-copy > small, .journey-result > small, .passport-head small, .flavor-picker > small, .gelato-preview > small { color: var(--sun); font-size: 8px; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }

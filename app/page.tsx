@@ -15,6 +15,7 @@ const sprites: Record<string, { src: string; columns: number; rows: number }> = 
   "dondurmali-milkshake": { src: "/menu-milkshake-sprite-v2.jpg", columns: 2, rows: 2 },
   tatlilar: { src: "/menu-dessert-sprite-v2.jpg", columns: 4, rows: 3 }
 };
+const spriteSources = [...new Set(Object.values(sprites).map(sprite => sprite.src))];
 type SceneProduct = { product: Product; category: Category; index: number };
 type Panel = "journey" | "composer" | "passport" | null;
 const journeyQuestions = [
@@ -79,6 +80,12 @@ export default function Home() {
 
   useEffect(() => { const now = new Date(); setHour(now.getHours()); setDay(now.getDay()); try { setFavorites(JSON.parse(localStorage.getItem("franco-passport") || "[]")); } catch { setFavorites([]); } }, []);
   useEffect(() => { localStorage.setItem("franco-passport", JSON.stringify(favorites)); }, [favorites]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      spriteSources.forEach(src => { const image = new Image(); image.decoding = "async"; image.src = src; });
+    }, 150);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const rhythmPeriod = hour < 12 ? "morning" : hour < 18 ? "afternoon" : "evening";
   const rhythmBase = dailySelections[rhythmPeriod];
@@ -166,5 +173,6 @@ function RoomNav({ title, close }: { title: string; close: () => void }) { retur
 
 function ProductScene({ item, pair, favorites, close, select, toggleFavorite }: { item: SceneProduct; pair: SceneProduct; favorites: string[]; close: () => void; select: (item: SceneProduct) => void; toggleFavorite: (id: string) => void }) {
   const intensity = "●".repeat(item.product.intensity ?? 2) + "○".repeat(4 - (item.product.intensity ?? 2));
-  return <section className="product-scene" role="dialog" aria-modal="true" aria-label={`${item.product.name} ürün detayı`}><button className="scene-close" onClick={close} aria-label="Ürün detayını kapat">Kapat ×</button><div className={`scene-art ${sprites[item.category.id] ? "has-photo" : ""}`} style={artStyle(item.category, item.index)}><span>{!sprites[item.category.id] && item.product.name.slice(0, 2)}</span></div><div className="scene-copy"><small>{item.category.name} · Franco seçkisi</small><h2>{item.product.name}</h2><p>{item.product.description ?? `${item.category.eyebrow}. En iyi anında servis edilir.`}</p><div className="taste-notes"><span>Tat profili <b>{item.product.profile ?? "Dengeli"}</b></span><span>Yoğunluk <b>{intensity}</b></span></div><strong className="scene-price">{money.format(item.product.price)}</strong><div className="scene-actions"><button onClick={() => toggleFavorite(item.product.id)}>{favorites.includes(item.product.id) ? "♥ Passport’ta" : "♡ Passport’a ekle"}</button><button onClick={() => navigator.share?.({ title: item.product.name, text: `Franco’da ${item.product.name}`, url: location.href })}>Paylaş ↗</button></div></div><button className="pair-card" onClick={() => select(pair)}><small>Because one treat is never enough</small><span>Bununla iyi gider</span><strong>{pair.product.name}</strong><em>{item.product.profile ?? item.category.eyebrow} ↔ {pair.product.profile ?? pair.category.eyebrow}</em><b>+ {money.format(pair.product.price)}</b></button></section>;
+  const sprite = sprites[item.category.id];
+  return <section className="product-scene" role="dialog" aria-modal="true" aria-label={`${item.product.name} ürün detayı`}><button className="scene-close" onClick={close} aria-label="Ürün detayını kapat">Kapat ×</button><div className={`scene-art ${sprite ? "has-photo" : ""}`} style={artStyle(item.category, item.index)}>{sprite && <img className="scene-image-priority" src={sprite.src} alt="" aria-hidden="true" fetchPriority="high" />}<span>{!sprite && item.product.name.slice(0, 2)}</span></div><div className="scene-copy"><small>{item.category.name} · Franco seçkisi</small><h2>{item.product.name}</h2><p>{item.product.description ?? `${item.category.eyebrow}. En iyi anında servis edilir.`}</p><div className="taste-notes"><span>Tat profili <b>{item.product.profile ?? "Dengeli"}</b></span><span>Yoğunluk <b>{intensity}</b></span></div><strong className="scene-price">{money.format(item.product.price)}</strong><div className="scene-actions"><button onClick={() => toggleFavorite(item.product.id)}>{favorites.includes(item.product.id) ? "♥ Passport’ta" : "♡ Passport’a ekle"}</button><button onClick={() => navigator.share?.({ title: item.product.name, text: `Franco’da ${item.product.name}`, url: location.href })}>Paylaş ↗</button></div></div><button className="pair-card" onClick={() => select(pair)}><small>Because one treat is never enough</small><span>Bununla iyi gider</span><strong>{pair.product.name}</strong><em>{item.product.profile ?? item.category.eyebrow} ↔ {pair.product.profile ?? pair.category.eyebrow}</em><b>+ {money.format(pair.product.price)}</b></button></section>;
 }
