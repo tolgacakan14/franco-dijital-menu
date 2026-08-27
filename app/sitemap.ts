@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [{
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://menu.francocoffee.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://francoserdivan.com",
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 1

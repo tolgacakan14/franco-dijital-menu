@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://menu.francocoffee.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://francoserdivan.com"),
   title: "Franco Coffee & Gelato | Menü",
   description: "Franco Coffee & Gelato'nun kahve, gelato, tatlı ve lezzetlerini keşfedin.",
   applicationName: "Franco Menü",
