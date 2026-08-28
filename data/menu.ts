@@ -7,7 +7,7 @@ export type Category = { id: string; name: string; eyebrow: string; icon: string
 const productImages: Record<string, string> = {
   "Nutella": "/products/generated/gelato-nutella-v2.jpg",
   "Belçika Çikolatası": "/products/generated/gelato-belcika-cikolatasi-v2.jpg",
-  "Nutella Cookies": "/products/generated/nutella-cookies-v2.jpg",
+  "Nutella Cookies": "/products/generated/nutella-cookies-v3.jpg",
   "Franco Snickers": "/products/generated/franco-snickers-v2.jpg"
 };
 
