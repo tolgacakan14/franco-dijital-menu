@@ -24,16 +24,18 @@ const journeyQuestions = [
   { title: "Son dokunuş?", key: "taste", options: [["Hafif", "light"], ["Tatlı", "sweet"], ["Dengeli", "balanced"]] }
 ] as const;
 
-function artStyle(category: Category, index: number) {
+function artStyle(category: Category, index: number, product?: Product) {
+  if (product?.imageUrl) return { backgroundImage: `url(${product.imageUrl})`, backgroundSize: "cover", backgroundPosition: "center" };
   const sprite = sprites[category.id];
   if (!sprite) return undefined;
-  const x = sprite.columns === 1 ? 0 : (index % sprite.columns) * 100 / (sprite.columns - 1);
-  const y = sprite.rows === 1 ? 50 : Math.floor(index / sprite.columns) * 100 / (sprite.rows - 1);
+  const imageIndex = product?.imageIndex ?? index;
+  const x = sprite.columns === 1 ? 0 : (imageIndex % sprite.columns) * 100 / (sprite.columns - 1);
+  const y = sprite.rows === 1 ? 50 : Math.floor(imageIndex / sprite.columns) * 100 / (sprite.rows - 1);
   return { backgroundImage: `url(${sprite.src})`, backgroundSize: sprite.rows === 1 ? `${sprite.columns * 100}% auto` : `${sprite.columns * 100}% ${sprite.rows * 100}%`, backgroundPosition: `${x}% ${y}%` };
 }
-function findProduct(name: string): SceneProduct {
-  for (const category of menu) { const index = category.products.findIndex(product => product.name === name); if (index >= 0) return { product: category.products[index], category, index }; }
-  return { product: menu[0].products[0], category: menu[0], index: 0 };
+function findProduct(catalog: Category[], name: string): SceneProduct {
+  for (const category of catalog) { const index = category.products.findIndex(product => product.name === name); if (index >= 0) return { product: category.products[index], category, index }; }
+  return { product: catalog[0].products[0], category: catalog[0], index: 0 };
 }
 
 const scoopPalettes: Record<string, [string, string, string]> = {
@@ -61,6 +63,7 @@ function scoopStyle(flavor: string, index: number): CSSProperties {
 }
 
 export default function Home() {
+  const [liveMenu, setLiveMenu] = useState<Category[]>(menu);
   const [activeIndex, setActiveIndex] = useState(0);
   const [query, setQuery] = useState("");
   const [searching, setSearching] = useState(false);
@@ -75,10 +78,18 @@ export default function Home() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [hour, setHour] = useState(14);
   const [day, setDay] = useState(0);
-  const active = menu[activeIndex];
+  const active = liveMenu[activeIndex] ?? liveMenu[0];
   const sprite = sprites[active.id];
 
   useEffect(() => { const now = new Date(); setHour(now.getHours()); setDay(now.getDay()); try { setFavorites(JSON.parse(localStorage.getItem("franco-passport") || "[]")); } catch { setFavorites([]); } }, []);
+  useEffect(() => {
+    let activeRequest = true;
+    fetch("/api/menu", { cache: "no-store" })
+      .then(response => response.ok ? response.json() : Promise.reject(new Error("Menü yüklenemedi")))
+      .then(data => { if (activeRequest && Array.isArray(data.menu) && data.menu.length) setLiveMenu(data.menu); })
+      .catch(() => { /* Yerel menü ekranda kalır. */ });
+    return () => { activeRequest = false; };
+  }, []);
   useEffect(() => { localStorage.setItem("franco-passport", JSON.stringify(favorites)); }, [favorites]);
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -90,7 +101,7 @@ export default function Home() {
   const rhythmPeriod = hour < 12 ? "morning" : hour < 18 ? "afternoon" : "evening";
   const rhythmBase = dailySelections[rhythmPeriod];
   const rhythm = { eyebrow: rhythmPeriod === "morning" ? "Günün ilk ritüeli" : rhythmPeriod === "afternoon" ? "Öğleden sonra" : "Akşam seçkisi", ...rhythmBase[day % rhythmBase.length] };
-  const results = useMemo(() => { const q = query.trim().toLocaleLowerCase("tr-TR"); if (!q) return []; return menu.flatMap(category => category.products.map((product, index) => ({ product, category, index })).filter(item => item.product.name.toLocaleLowerCase("tr-TR").includes(q))); }, [query]);
+  const results = useMemo(() => { const q = query.trim().toLocaleLowerCase("tr-TR"); if (!q) return []; return liveMenu.flatMap(category => category.products.map((product, index) => ({ product, category, index })).filter(item => item.product.name.toLocaleLowerCase("tr-TR").includes(q))); }, [query, liveMenu]);
 
   const selectCategory = (index: number) => {
     const update = () => { setActiveIndex(index); setSearching(false); setQuery(""); };
@@ -103,9 +114,9 @@ export default function Home() {
     const nextAnswers = { ...answers, [key]: value }; setAnswers(nextAnswers);
     if (journeyStep < journeyQuestions.length - 1) return setJourneyStep(step => step + 1);
     const picked = journeyChoices[`${nextAnswers.mood}-${nextAnswers.temperature}-${nextAnswers.taste}`] ?? "Latte";
-    setJourneyResult(findProduct(picked));
+    setJourneyResult(findProduct(liveMenu, picked));
   };
-  const pairingFor = (item: SceneProduct) => findProduct(item.product.pairing ?? (item.category.id === "tatlilar" ? "Americano" : "Tiramisu"));
+  const pairingFor = (item: SceneProduct) => findProduct(liveMenu, item.product.pairing ?? (item.category.id === "tatlilar" ? "Americano" : "Tiramisu"));
   const toggleFavorite = (id: string) => setFavorites(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
   const selectScoop = (flavor: string) => {
     setScoops(current => current.length < 4 ? [...current, flavor] : current);
@@ -115,23 +126,23 @@ export default function Home() {
     setScoops(current => current.filter((_, scoopIndex) => scoopIndex !== index));
     setServingTurn(turn => turn + 1);
   };
-  const favoriteProducts = menu.flatMap(category => category.products.map((product, index) => ({ product, category, index }))).filter(item => favorites.includes(item.product.id));
-  const gelato = menu.find(category => category.id === "dondurma")!;
+  const favoriteProducts = liveMenu.flatMap(category => category.products.map((product, index) => ({ product, category, index }))).filter(item => favorites.includes(item.product.id));
+  const gelato = liveMenu.find(category => category.id === "dondurma") ?? menu[0];
   const gelatoMatch = evaluateGelato(scoops);
 
   return <main className="site-shell">
     <header className="masthead"><h1 className="official-brand-lockup"><img className="official-brand-artwork" src="/franco-brand-official.jpg" alt="Franco Coffee Gelato — Because one treat is never enough" width="2584" height="2613" /></h1></header>
 
-    <section className="rhythm-card" aria-label="Günün Franco seçkisi"><div><small>{rhythm.eyebrow}</small><h2>{rhythm.title}</h2><p>{rhythm.copy}</p></div><button onClick={() => setScene(findProduct(rhythm.product))}>Seçkiyi gör <span>↗</span></button></section>
+    <section className="rhythm-card" aria-label="Günün Franco seçkisi"><div><small>{rhythm.eyebrow}</small><h2>{rhythm.title}</h2><p>{rhythm.copy}</p></div><button onClick={() => setScene(findProduct(liveMenu, rhythm.product))}>Seçkiyi gör <span>↗</span></button></section>
     <section className="experience-strip" aria-label="Franco deneyimleri">
       <button data-mark="F" onClick={() => openPanel("journey")}><small>01 · Sana özel</small><strong>Lezzet Yolculuğu</strong><span>Üç dokunuşta Franco seçimin</span></button>
       <button data-mark="G" onClick={() => openPanel("composer")}><small>02 · Kendi lezzetin</small><strong>Dondurmanı Oluştur</strong><span>Lezzetlerini seç, uyumunu yarat</span></button>
       <button data-mark="P" onClick={() => openPanel("passport")}><small>03 · Senin Franco’n</small><strong>Franco Passport</strong><span>{favorites.length ? `${favorites.length} favorin kayıtlı` : "Favorilerini yanında tut"}</span></button>
     </section>
 
-    <nav className="category-rail" aria-label="Menü kategorileri"><div className="rail-head"><p className="rail-label">Ne arzu edersiniz?</p><button className="search-trigger" onClick={() => setSearching(true)} aria-label="Menüde ara">Ara <span aria-hidden="true">↗</span></button></div><div className="rail-track">{menu.map((category, index) => <button key={category.id} className={index === activeIndex ? "active" : ""} onClick={() => selectCategory(index)} aria-current={index === activeIndex ? "page" : undefined}><small>{String(index + 1).padStart(2, "0")}</small><span>{category.name}</span></button>)}</div></nav>
+    <nav className="category-rail" aria-label="Menü kategorileri"><div className="rail-head"><p className="rail-label">Ne arzu edersiniz?</p><button className="search-trigger" onClick={() => setSearching(true)} aria-label="Menüde ara">Ara <span aria-hidden="true">↗</span></button></div><div className="rail-track">{liveMenu.map((category, index) => <button key={category.id} className={index === activeIndex ? "active" : ""} onClick={() => selectCategory(index)} aria-current={index === activeIndex ? "page" : undefined}><small>{String(index + 1).padStart(2, "0")}</small><span>{category.name}</span></button>)}</div></nav>
 
-    <section className="menu-stage" key={active.id}><div className="chapter-head"><span className="chapter-number">{String(activeIndex + 1).padStart(2, "0")}</span><div><p>{active.eyebrow}</p><h2>{active.name}</h2></div><span className="chapter-mark" aria-hidden="true">{active.icon}</span></div><div className="menu-board">{active.products.map((product, index) => <article className={`menu-line art-style-${(index + activeIndex) % 4}`} key={product.id}><button className="product-open" onClick={() => setScene({ product, category: active, index })} aria-label={`${product.name} detayını aç`}><div className={`product-art ${sprite ? "has-photo" : ""}`} style={artStyle(active, index)} aria-hidden="true">{!sprite && <span>{product.name.slice(0, 2).toLocaleUpperCase("tr-TR")}</span>}{!sprite && <small>FRANCO · {String(index + 1).padStart(2, "0")}</small>}{favorites.includes(product.id) && <b className="favorite-dot">♥</b>}</div><div className="product-info"><h3>{product.name}</h3><p>{product.profile ?? active.eyebrow}</p><strong>{money.format(product.price)}</strong></div></button></article>)}</div><button className="next-chapter" onClick={() => selectCategory((activeIndex + 1) % menu.length)}><span>Sıradaki bölüm</span><strong>{menu[(activeIndex + 1) % menu.length].name}</strong><b aria-hidden="true">→</b></button></section>
+    <section className="menu-stage" key={active.id}><div className="chapter-head"><span className="chapter-number">{String(activeIndex + 1).padStart(2, "0")}</span><div><p>{active.eyebrow}</p><h2>{active.name}</h2></div><span className="chapter-mark" aria-hidden="true">{active.icon}</span></div><div className="menu-board">{active.products.map((product, index) => <article className={`menu-line art-style-${(index + activeIndex) % 4} ${product.status === "sold-out" ? "is-sold-out" : ""}`} key={product.id}><button className="product-open" onClick={() => setScene({ product, category: active, index })} aria-label={`${product.name} detayını aç`}><div className={`product-art ${sprite || product.imageUrl ? "has-photo" : ""}`} style={artStyle(active, index, product)} aria-hidden="true">{!sprite && !product.imageUrl && <span>{product.name.slice(0, 2).toLocaleUpperCase("tr-TR")}</span>}{!sprite && !product.imageUrl && <small>FRANCO · {String(index + 1).padStart(2, "0")}</small>}{favorites.includes(product.id) && <b className="favorite-dot">♥</b>}</div><div className="product-info"><h3>{product.name}</h3><p>{product.status === "sold-out" ? "Bugün tükendi" : product.profile ?? active.eyebrow}</p><strong>{money.format(product.price)}</strong></div></button></article>)}</div><button className="next-chapter" onClick={() => selectCategory((activeIndex + 1) % liveMenu.length)}><span>Sıradaki bölüm</span><strong>{liveMenu[(activeIndex + 1) % liveMenu.length].name}</strong><b aria-hidden="true">→</b></button></section>
 
     <aside className="marquee" aria-label="Franco sloganı"><div>COFFEE <span>✦</span> GELATO <span>✦</span> GOOD TIMES <span>✦</span> FRANCO <span>✦</span> COFFEE <span>✦</span> GELATO <span>✦</span></div></aside>
     <footer><div className="footer-seal"><span>F</span><small>EST. · 2024</small></div><div><p>Franco Coffee &amp; Gelato</p><small>Fiyatlara KDV dahildir. Alerjen bilgileri için ekibimize danışabilirsiniz.</small></div><a className="instagram-cta" href="https://www.instagram.com/francoserdivan/" target="_blank" rel="noreferrer" aria-label="Franco Serdivan Instagram hesabını aç"><span>Bizi Instagram’dan takip edin</span><strong>@francoserdivan</strong><b aria-hidden="true">↗</b></a></footer>
@@ -174,5 +185,5 @@ function RoomNav({ title, close }: { title: string; close: () => void }) { retur
 function ProductScene({ item, pair, favorites, close, select, toggleFavorite }: { item: SceneProduct; pair: SceneProduct; favorites: string[]; close: () => void; select: (item: SceneProduct) => void; toggleFavorite: (id: string) => void }) {
   const intensity = "●".repeat(item.product.intensity ?? 2) + "○".repeat(4 - (item.product.intensity ?? 2));
   const sprite = sprites[item.category.id];
-  return <section className="product-scene" role="dialog" aria-modal="true" aria-label={`${item.product.name} ürün detayı`}><button className="scene-close" onClick={close} aria-label="Ürün detayını kapat">Kapat ×</button><div className={`scene-art ${sprite ? "has-photo" : ""}`} style={artStyle(item.category, item.index)}>{sprite && <img className="scene-image-priority" src={sprite.src} alt="" aria-hidden="true" fetchPriority="high" />}<span>{!sprite && item.product.name.slice(0, 2)}</span></div><div className="scene-copy"><small>{item.category.name} · Franco seçkisi</small><h2>{item.product.name}</h2><p>{item.product.description ?? `${item.category.eyebrow}. En iyi anında servis edilir.`}</p><div className="taste-notes"><span>Tat profili <b>{item.product.profile ?? "Dengeli"}</b></span><span>Yoğunluk <b>{intensity}</b></span></div><strong className="scene-price">{money.format(item.product.price)}</strong><div className="scene-actions"><button onClick={() => toggleFavorite(item.product.id)}>{favorites.includes(item.product.id) ? "♥ Passport’ta" : "♡ Passport’a ekle"}</button><button onClick={() => navigator.share?.({ title: item.product.name, text: `Franco’da ${item.product.name}`, url: location.href })}>Paylaş ↗</button></div></div><button className="pair-card" onClick={() => select(pair)}><small>Because one treat is never enough</small><span>Bununla iyi gider</span><strong>{pair.product.name}</strong><em>{item.product.profile ?? item.category.eyebrow} ↔ {pair.product.profile ?? pair.category.eyebrow}</em><b>+ {money.format(pair.product.price)}</b></button></section>;
+  return <section className="product-scene" role="dialog" aria-modal="true" aria-label={`${item.product.name} ürün detayı`}><button className="scene-close" onClick={close} aria-label="Ürün detayını kapat">Kapat ×</button><div className={`scene-art ${sprite || item.product.imageUrl ? "has-photo" : ""}`} style={artStyle(item.category, item.index, item.product)}>{sprite && !item.product.imageUrl && <img className="scene-image-priority" src={sprite.src} alt="" aria-hidden="true" fetchPriority="high" />}<span>{!sprite && !item.product.imageUrl && item.product.name.slice(0, 2)}</span></div><div className="scene-copy"><small>{item.category.name} · Franco seçkisi</small><h2>{item.product.name}</h2>{item.product.status === "sold-out" && <b className="sold-out-label">Bugün tükendi</b>}<p>{item.product.description ?? `${item.category.eyebrow}. En iyi anında servis edilir.`}</p><div className="taste-notes"><span>Tat profili <b>{item.product.profile ?? "Dengeli"}</b></span><span>Yoğunluk <b>{intensity}</b></span></div><strong className="scene-price">{money.format(item.product.price)}</strong><div className="scene-actions"><button onClick={() => toggleFavorite(item.product.id)}>{favorites.includes(item.product.id) ? "♥ Passport’ta" : "♡ Passport’a ekle"}</button><button onClick={() => navigator.share?.({ title: item.product.name, text: `Franco’da ${item.product.name}`, url: location.href })}>Paylaş ↗</button></div></div><button className="pair-card" onClick={() => select(pair)}><small>Because one treat is never enough</small><span>Bununla iyi gider</span><strong>{pair.product.name}</strong><em>{item.product.profile ?? item.category.eyebrow} ↔ {pair.product.profile ?? pair.category.eyebrow}</em><b>+ {money.format(pair.product.price)}</b></button></section>;
 }

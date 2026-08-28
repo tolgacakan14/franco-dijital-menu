@@ -1,12 +1,14 @@
 import { productKnowledge } from "./menu-intelligence";
 
-export type Product = { id: string; name: string; price: number; description?: string; profile?: string; intensity?: 1 | 2 | 3 | 4; pairing?: string; tags?: string[]; badge?: string };
+export type ProductStatus = "active" | "sold-out";
+export type Product = { id: string; name: string; price: number; description?: string; profile?: string; intensity?: 1 | 2 | 3 | 4; pairing?: string; tags?: string[]; badge?: string; status?: ProductStatus; imageIndex?: number; imageUrl?: string };
 export type Category = { id: string; name: string; eyebrow: string; icon: string; products: Product[] };
 
 const products = (items: Array<[string, number]>): Product[] => items.map(([name, price], index) => ({
   id: `${name.toLocaleLowerCase("tr-TR").replace(/[^a-z0-9çğıöşü]+/gi, "-").replace(/^-|-$/g, "")}-${index}`,
   name,
   price,
+  imageIndex: index,
   ...productKnowledge[name]
 }));
 

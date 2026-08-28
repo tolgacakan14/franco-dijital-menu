@@ -1,6 +1,17 @@
 # Franco Coffee & Gelato — Dijital QR Menü
 
-Mobil öncelikli, hızlı ve kolay güncellenebilir dijital menü. Menü içeriği backend olmadan `data/menu.ts` dosyasından yönetilir.
+Mobil öncelikli, hızlı ve kolay güncellenebilir dijital menü. Menü içeriği Google Sheets üzerinden yönetilebilir; bağlantı kurulmadığında doğrulanmış `data/menu.ts` verisi güvenli yedek olarak kullanılır.
+
+## Google Sheets ile menü yönetimi
+
+1. `outputs/google-sheets-menu/franco-menu-yonetim.xlsx` dosyasını Google Drive'a yükleyip Google E-Tablolar biçiminde açın.
+2. **Dosya → Paylaş → Web'de yayınla** bölümünde yalnızca **Menü** sayfasını **Virgülle ayrılmış değerler (.csv)** olarak yayınlayın.
+3. Oluşan CSV adresini Vercel projesinde `GOOGLE_SHEETS_MENU_CSV_URL` adlı Production ortam değişkenine ekleyin.
+4. Yeni bir production deploy başlatın.
+
+İşletme `ürün_adı`, `fiyat`, `açıklama`, `tat_profili`, `yoğunluk`, `eşleşme` ve `durum` alanlarını güncelleyebilir. `Aktif` normal görünür, `Tükendi` sitede durum etiketi alır, `Gizli` ise gösterilmez. `kategori_kodu`, `ürün_kodu` ve `görsel_indeksi` mevcut görsellerle eşleşmeyi koruduğu için değiştirilmemelidir.
+
+Tablo web'de yayınlandığı için yalnızca müşteriye açık menü bilgileri içermelidir; şifre veya özel işletme verileri eklenmemelidir. Sheet erişilemez ya da sütun yapısı bozulursa site kapanmaz ve yerel menü otomatik devreye girer.
 
 ## Özellikler
 
