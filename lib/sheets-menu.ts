@@ -75,7 +75,7 @@ export function menuFromCsv(csv: string): Category[] {
     categories.get(categoryId)!.products.push(product);
   }
 
-  return [...categories.values()]
+  return Array.from(categories.values())
     .sort((a, b) => a.order - b.order)
     .map(({ order: _order, ...category }) => ({
       ...category,
