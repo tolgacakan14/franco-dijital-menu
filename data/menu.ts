@@ -5,10 +5,10 @@ export type Product = { id: string; name: string; price: number; description?: s
 export type Category = { id: string; name: string; eyebrow: string; icon: string; products: Product[] };
 
 const productImages: Record<string, string> = {
-  "Nutella": "/products/generated/gelato-nutella.jpg",
-  "Belçika Çikolatası": "/products/generated/gelato-belcika-cikolatasi.jpg",
-  "Nutella Cookies": "/products/generated/nutella-cookies.jpg",
-  "Franco Snickers": "/products/generated/franco-snickers.jpg"
+  "Nutella": "/products/generated/gelato-nutella-v2.jpg",
+  "Belçika Çikolatası": "/products/generated/gelato-belcika-cikolatasi-v2.jpg",
+  "Nutella Cookies": "/products/generated/nutella-cookies-v2.jpg",
+  "Franco Snickers": "/products/generated/franco-snickers-v2.jpg"
 };
 
 const products = (items: Array<[string, number]>): Product[] => items.map(([name, price], index) => ({
