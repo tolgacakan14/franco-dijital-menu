@@ -22,6 +22,8 @@ export const productKnowledge: Record<string, ProductKnowledge> = {
   "Lotus": { description: "Baharatlı bisküvi ve karamel çağrışımlı yoğun bir profil.", profile: "Bisküvi · baharat", intensity: 4, pairing: "Cappuccino" },
   "Böğürtlen": { description: "Koyu orman meyvesi, kontrollü ekşilik ve aromatik bitiş.", profile: "Orman meyvesi", intensity: 3, pairing: "White Chocolate Mocha" },
   "Antep Fıstığı": { description: "Belirgin fıstık aroması; yağlı, zarif ve kalıcı gövde.", profile: "Fıstık · kavruk", intensity: 4, pairing: "Espresso" },
+  "Nutella": { description: "Fındık ve kakao kremasının sütlü, ipeksi ve yoğun gelato yorumu.", profile: "Fındık · sütlü kakao", intensity: 4, pairing: "Espresso" },
+  "Belçika Çikolatası": { description: "Bitter kuvertür karakteri, belirgin kakao ve uzun, tok bir bitiş.", profile: "Bitter kakao · yoğun", intensity: 4, pairing: "Vişne" },
 
   "Affagato": { description: "Sıcak espresso ile soğuk gelatonun acı–tatlı ve sıcak–soğuk kontrastı.", profile: "Espresso · kremamsı", intensity: 4, pairing: "Sütlü" },
   "Ice Latte": { description: "Sütle yumuşayan espresso; serin, ipeksi ve dengeli.", profile: "Sütlü · serin", intensity: 2, pairing: "Çilekli Magnolia" },
@@ -36,7 +38,7 @@ export const productKnowledge: Record<string, ProductKnowledge> = {
 
   "Double Türk Kahvesi": { description: "Türk kahvesinin gövdeli ve uzun bitişli, daha güçlü porsiyonu.", profile: "Yoğun · geleneksel", intensity: 4, pairing: "İncir&Ceviz" },
   "Türk Kahvesi": { description: "İnce öğütümün oluşturduğu yoğun gövde ve kalıcı kavruk bitiş.", profile: "Gövdeli · kavruk", intensity: 4, pairing: "San Sabastian" },
-  "Latte": { description: "Espressonun bol sütle yumuşadığı, ipeksi ve sakin içim.", profile: "Sütlü · yumuşak", intensity: 2, pairing: "Franco Profiterol" },
+  "Latte": { description: "Espressonun bol sütle yumuşadığı, ipeksi ve sakin içim.", profile: "Sütlü · yumuşak", intensity: 2, pairing: "Nutella Cookies" },
   "Vanilla Latte": { description: "Sütlü espressoya eşlik eden narin vanilya ve tatlı aroma.", profile: "Vanilya · yumuşak", intensity: 2, pairing: "Belçika Çikolatalı Brownie" },
   "Caramel Latte": { description: "Karamelin sıcak tatlılığıyla yuvarlanan sütlü espresso.", profile: "Karamel · sıcak", intensity: 3, pairing: "Çilekli Magnolia" },
   "Toffienut Latte": { description: "Toffee ve kuruyemiş çağrışımlı, tok ve tatlı sütlü kahve.", profile: "Toffee · kavruk", intensity: 3, pairing: "Lotus Küre" },
@@ -53,13 +55,12 @@ export const productKnowledge: Record<string, ProductKnowledge> = {
   "Dondurmalı Brownie": { description: "Sıcak ve yoğun brownie karakterini soğuk gelato ferahlığı dengeler.", profile: "Sıcak–soğuk · kakao", intensity: 4, pairing: "Americano" },
   "Belçika Çikolatalı Brownie": { description: "Belirgin çikolata yoğunluğu, nemli doku ve uzun kakao bitişi.", profile: "Yoğun çikolata", intensity: 4, pairing: "Cortado" },
   "San Sabastian": { description: "Karamelize yüzey ile kremamsı peynir dokusunun tatlı–tuzlu dengesi.", profile: "Kremamsı · karamelize", intensity: 3, pairing: "Türk Kahvesi" },
-  "Franco Profiterol": { description: "Hafif hamur, krema ve çikolata ekseninde katmanlı bir klasik.", profile: "Krema · çikolata", intensity: 3, pairing: "Latte" },
   "Belçika Çikolatalı Profiretol": { description: "Profiterol dokusunu daha koyu ve baskın çikolata karakteri tamamlar.", profile: "Koyu kakao · krema", intensity: 4, pairing: "Espresso" },
   "Dubai Cup": { description: "Çikolata ve fıstık ekseninde yoğun, kavruk ve dokulu bir kup.", profile: "Çikolata · fıstık", intensity: 4, pairing: "Double Espresso" },
-  "Nutella Cookies": { description: "Fındık–kakao karakteri ve kurabiye dokusuyla tok bir tatlı.", profile: "Fındık · bisküvi", intensity: 4, pairing: "Filtre Kahve" },
+  "Nutella Cookies": { description: "Kalın, yumuşak pişmiş cookie diliminde akışkan fındık-kakao dolgusu ve sütlü çikolata parçaları.", profile: "Fındık-kakao · yumuşak cookie", intensity: 4, pairing: "Filtre Kahve" },
   "Spoonful Cup": { description: "Kaşıkla açılan yumuşak katmanlarıyla kremamsı ve dolgun bir kup.", profile: "Kremamsı · katmanlı", intensity: 3, pairing: "Ice Americano" },
   "Tiramisu": { description: "Kahve, kakao ve kremamsı yapının acı–tatlı dengesine dayanan İtalyan klasiği.", profile: "Kahve · kakao", intensity: 3, pairing: "Espresso" },
-  "Franco Snickers": { description: "Karamel, yer fıstığı ve çikolata çağrışımlarıyla yoğun ve kavruk.", profile: "Fıstık · karamel", intensity: 4, pairing: "Flat White" },
+  "Franco Snickers": { description: "El yapımı uzun bar formunda, çikolata kaplama ve beyaz çikolata çizgileriyle yoğun bir tatlı.", profile: "Çikolata · yoğun bar", intensity: 4, pairing: "Flat White" },
   "Çilekli Magnolia": { description: "Sütlü krema hissini çileğin parlak meyvemsi karakteri hafifletir.", profile: "Çilek · sütlü", intensity: 2, pairing: "Ice Latte" },
   "Lotus Küre": { description: "Karamelize bisküvi ve baharat çağrışımıyla çıtır, yoğun bir tatlı.", profile: "Bisküvi · karamel", intensity: 4, pairing: "Cappuccino" },
 
@@ -101,7 +102,9 @@ const gelatoProfiles: Record<string, GelatoProfile> = {
   "İncir&Ceviz": { family: "nut", sweet: 3, acid: 0, rich: 4, role: "kuru meyve ve ceviz gövdesi" },
   "Lotus": { family: "biscuit", sweet: 4, acid: 0, rich: 4, role: "baharatlı bisküvi yoğunluğu" },
   "Böğürtlen": { family: "red-fruit", sweet: 2, acid: 3, rich: 2, role: "koyu orman meyvesi" },
-  "Antep Fıstığı": { family: "nut", sweet: 2, acid: 0, rich: 4, role: "zarif fıstık kavrukluğu" }
+  "Antep Fıstığı": { family: "nut", sweet: 2, acid: 0, rich: 4, role: "zarif fıstık kavrukluğu" },
+  "Nutella": { family: "nut", sweet: 4, acid: 0, rich: 4, role: "fındık ve sütlü kakao kreması" },
+  "Belçika Çikolatası": { family: "cocoa", sweet: 2, acid: 0, rich: 4, role: "bitter kuvertür ve derin kakao" }
 };
 
 const affinities: Record<string, number> = {

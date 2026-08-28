@@ -4,11 +4,19 @@ export type ProductStatus = "active" | "sold-out";
 export type Product = { id: string; name: string; price: number; description?: string; profile?: string; intensity?: 1 | 2 | 3 | 4; pairing?: string; tags?: string[]; badge?: string; status?: ProductStatus; imageIndex?: number; imageUrl?: string };
 export type Category = { id: string; name: string; eyebrow: string; icon: string; products: Product[] };
 
+const productImages: Record<string, string> = {
+  "Nutella": "/products/generated/gelato-nutella.jpg",
+  "Belçika Çikolatası": "/products/generated/gelato-belcika-cikolatasi.jpg",
+  "Nutella Cookies": "/products/generated/nutella-cookies.jpg",
+  "Franco Snickers": "/products/generated/franco-snickers.jpg"
+};
+
 const products = (items: Array<[string, number]>): Product[] => items.map(([name, price], index) => ({
   id: `${name.toLocaleLowerCase("tr-TR").replace(/[^a-z0-9çğıöşü]+/gi, "-").replace(/^-|-$/g, "")}-${index}`,
   name,
   price,
   imageIndex: index,
+  imageUrl: productImages[name],
   ...productKnowledge[name]
 }));
 
@@ -17,7 +25,8 @@ export const menu: Category[] = [
   { id: "dondurma", name: "Dondurma", eyebrow: "Franco gelato", icon: "GL", products: products([
     ["Sütlü",80],["Kakao",80],["Karamel",80],["Tahin",80],["İtalyan Karameli",80],["Bal Badem",80],
     ["Vişne",80],["Çilek",80],["Oreo",80],["Kavun",80],["Limon",80],["Yeşil Elma",80],
-    ["İncir&Ceviz",80],["Lotus",80],["Böğürtlen",80],["Antep Fıstığı",80]
+    ["İncir&Ceviz",80],["Lotus",80],["Böğürtlen",80],["Antep Fıstığı",80],
+    ["Nutella",80],["Belçika Çikolatası",80]
   ])},
   { id: "soguk-kahveler", name: "Soğuk Kahveler", eyebrow: "Buz gibi kahve", icon: "SK", products: products([
     ["Affagato",230],["Ice Latte",220],["Ice Vanilla Latte",240],["Ice Caramel Latte",240],
@@ -45,7 +54,7 @@ export const menu: Category[] = [
   ])},
   { id: "tatlilar", name: "Tatlılar", eyebrow: "Tatlı bir mola", icon: "TL", products: products([
     ["Dondurmalı Brownie",400],["Belçika Çikolatalı Brownie",400],["San Sabastian",360],
-    ["Franco Profiterol",360],["Belçika Çikolatalı Profiretol",400],["Dubai Cup",360],
+    ["Belçika Çikolatalı Profiretol",400],["Dubai Cup",360],
     ["Nutella Cookies",360],["Spoonful Cup",350],["Tiramisu",350],["Franco Snickers",350],
     ["Çilekli Magnolia",350],["Lotus Küre",360]
   ])}
