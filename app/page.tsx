@@ -11,6 +11,7 @@ const sprites: Record<string, { src: string; columns: number; rows: number }> = 
   "soguk-icecekler": { src: "/menu-cold-drinks-sprite-v2.jpg", columns: 3, rows: 3 },
   "summer-edition": { src: "/menu-summer-sprite-v2.jpg", columns: 2, rows: 1 },
   "sicak-kahveler": { src: "/menu-hot-coffee-sprite-v2.jpg", columns: 4, rows: 4 },
+  "brew-bar": { src: "/menu-hot-coffee-sprite-v2.jpg", columns: 4, rows: 4 },
   "sicak-icecekler": { src: "/menu-hot-drinks-sprite-v2.jpg", columns: 2, rows: 1 },
   "dondurmali-milkshake": { src: "/menu-milkshake-sprite-v2.jpg", columns: 2, rows: 2 },
   tatlilar: { src: "/menu-dessert-sprite-v2.jpg", columns: 4, rows: 3 }
