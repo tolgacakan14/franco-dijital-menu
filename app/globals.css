@@ -60,7 +60,7 @@ button { cursor: pointer; }
 .rail-track::-webkit-scrollbar { display: none; }
 .rail-track button { position: relative; flex: none; display: block; padding: 8px 0 10px; border: 0; background: transparent; color: rgba(56,36,31,.62); text-align: center; scroll-snap-align: center; transition: color .25s; }
 .rail-track button small { display: none; }
-.rail-track button span { white-space: nowrap; font-family: Arial, sans-serif; font-size: 13px; font-weight: 500; letter-spacing: .025em; }
+.rail-track button span { white-space: nowrap; color: inherit; font-family: Arial, sans-serif; font-size: 13px; font-weight: 500; letter-spacing: .015em; text-transform: none; }
 .rail-track button::after { content: ""; position: absolute; left: 50%; bottom: 2px; width: 0; height: 1px; background: var(--sun); transform: translateX(-50%); transition: width .28s ease; }
 .rail-track button.active { color: var(--sun); }
 .rail-track button.active::after { width: 100%; }
@@ -71,7 +71,7 @@ button { cursor: pointer; }
 .chapter-head::after { background: linear-gradient(90deg, var(--sun), transparent); }
 .chapter-number, .chapter-mark { display: none; }
 .chapter-head p { margin: 0 0 5px; color: rgba(56,36,31,.5); font-family: Georgia, serif; font-size: 11px; font-style: italic; }
-.chapter-head h2 { margin: 0; color: var(--sun); font-family: Arial, sans-serif; font-size: clamp(22px, 6vw, 34px); font-weight: 400; line-height: 1; letter-spacing: -.02em; white-space: nowrap; }
+.chapter-head h2 { margin: 0; color: var(--sun); font-family: Arial, sans-serif; font-size: clamp(22px, 6vw, 34px); font-weight: 500; line-height: 1.05; letter-spacing: -.015em; text-transform: none; white-space: nowrap; }
 .menu-board { max-width: 1040px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 14px; margin: auto; }
 .menu-line { min-width: 0; text-align: center; opacity: 0; animation: line-reveal .45s ease forwards; }
 .product-open { width: 100%; padding: 0; border: 0; background: transparent; text-align: inherit; }
