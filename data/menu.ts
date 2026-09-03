@@ -27,7 +27,7 @@ export const menu: Category[] = [
     ["Belçika Çikolatalı Profiretol",400],["Dubai Cup",360],["Nutella Cookies",360],
     ["Spoonful Cup",350],["Tiramisu",350],["Franco Snickers",350],["Çilekli Magnolia",350],["Lotus Küre",360]
   ])},
-  { id: "soguk-kahveler", name: "ICED ESPRESSO BAR", eyebrow: "Buz gibi espresso", icon: "IE", products: products([
+  { id: "soguk-kahveler", name: "Iced Espresso Bar", eyebrow: "Buz gibi espresso", icon: "IE", products: products([
     ["Ice Latte",220],["Ice Americano",220],["Ice Caramel Latte",240],["Ice Vanilla Latte",240],
     ["Ice White Chocolate Mocha",240],["Ice Mocha",240],["Ice Toffee Nut Latte",240],["Frappe",230]
   ])},
@@ -39,7 +39,7 @@ export const menu: Category[] = [
   { id: "summer-edition", name: "Kokteyl", eyebrow: "Franco imza içecekleri", icon: "KT", products: products([
     ["Franco Mango",250],["Rooibos Peach",250]
   ])},
-  { id: "sicak-kahveler", name: "ESPRESSO BAR", eyebrow: "Espresso temelli kahveler", icon: "EB", products: products([
+  { id: "sicak-kahveler", name: "Espresso Bar", eyebrow: "Espresso temelli kahveler", icon: "EB", products: products([
     ["Espresso",130],["Double Espresso",150],["Americano",180],["Latte",210],["Flat White",190],
     ["Cappuccino",210],["Cortado",180],["Vanilla Latte",220],["Caramel Latte",220],
     ["Toffienut Latte",220],["Mocha",220],["White Chocolate Mocha",220],["Affagato",230]
