@@ -18,7 +18,7 @@ const sprites: Record<string, { src: string; columns: number; rows: number }> = 
 };
 const spriteSources = Array.from(new Set(Object.values(sprites).map(sprite => sprite.src)));
 type SceneProduct = { product: Product; category: Category; index: number };
-type Panel = "journey" | "composer" | "passport" | null;
+type Panel = "journey" | "composer" | "passport" | "experiences" | "gallery" | null;
 const categoryLabel = (name: string) => {
   if (name.toLocaleUpperCase("tr-TR") === "ICED ESPRESSO BAR") return "Iced Espresso Bar";
   if (name.toLocaleUpperCase("tr-TR") === "ESPRESSO BAR") return "Espresso Bar";
@@ -134,20 +134,19 @@ export default function Home() {
     setScoops(current => current.filter((_, scoopIndex) => scoopIndex !== index));
     setServingTurn(turn => turn + 1);
   };
-  const favoriteProducts = liveMenu.flatMap(category => category.products.map((product, index) => ({ product, category, index }))).filter(item => favorites.includes(item.product.id));
+  const galleryProducts = liveMenu.flatMap(category => category.products.map((product, index) => ({ product, category, index })));
+  const favoriteProducts = galleryProducts.filter(item => favorites.includes(item.product.id));
   const gelato = liveMenu.find(category => category.id === "dondurma") ?? menu[0];
   const gelatoMatch = evaluateGelato(scoops);
 
   return <main className="site-shell">
     <header className="masthead"><h1 className="official-brand-lockup"><img className="official-brand-artwork" src="/franco-brand-official.jpg" alt="Franco Coffee Gelato — Because one treat is never enough" width="2584" height="2613" /></h1></header>
+    <nav className="top-menu-actions" aria-label="Franco hızlı menü">
+      <button onClick={() => openPanel("experiences")}><small>Keşfet</small><strong>Deneyimlerimiz</strong><span aria-hidden="true">↗</span></button>
+      <button onClick={() => openPanel("gallery")}><small>Tüm menü</small><strong>Diğer Ürünler</strong><span aria-hidden="true">↗</span></button>
+    </nav>
 
     <section className="rhythm-card" aria-label="Günün Franco seçkisi"><div><small>{rhythm.eyebrow}</small><h2>{rhythm.title}</h2><p>{rhythm.copy}</p></div><button onClick={() => setScene(findProduct(liveMenu, rhythm.product))}>Seçkiyi gör <span>↗</span></button></section>
-    <section className="experience-strip" aria-label="Franco deneyimleri">
-      <button data-mark="F" onClick={() => openPanel("journey")}><small>01 · Sana özel</small><strong>Lezzet Yolculuğu</strong><span>Üç dokunuşta Franco seçimin</span></button>
-      <button data-mark="G" onClick={() => openPanel("composer")}><small>02 · Kendi lezzetin</small><strong>Dondurmanı Oluştur</strong><span>Lezzetlerini seç, uyumunu yarat</span></button>
-      <button data-mark="P" onClick={() => openPanel("passport")}><small>03 · Senin Franco’n</small><strong>Franco Passport</strong><span>{favorites.length ? `${favorites.length} favorin kayıtlı` : "Favorilerini yanında tut"}</span></button>
-    </section>
-
     <nav className="category-rail" aria-label="Menü kategorileri"><div className="rail-head"><p className="rail-label">Ne arzu edersiniz?</p><button className="search-trigger" onClick={() => setSearching(true)} aria-label="Menüde ara">Ara <span aria-hidden="true">↗</span></button></div><div className="rail-track">{liveMenu.map((category, index) => <button key={category.id} className={index === activeIndex ? "active" : ""} onClick={() => selectCategory(index)} aria-current={index === activeIndex ? "page" : undefined}><small>{String(index + 1).padStart(2, "0")}</small><span>{categoryLabel(category.name)}</span></button>)}</div></nav>
 
     <section className="menu-stage" key={active.id}><div className="chapter-head"><span className="chapter-number">{String(activeIndex + 1).padStart(2, "0")}</span><div><p>{active.eyebrow}</p><h2>{categoryLabel(active.name)}</h2></div><span className="chapter-mark" aria-hidden="true">{active.icon}</span></div><div className="menu-board">{active.products.map((product, index) => <article className={`menu-line art-style-${(index + activeIndex) % 4} ${product.status === "sold-out" ? "is-sold-out" : ""}`} key={product.id}><button className="product-open" onClick={() => setScene({ product, category: active, index })} aria-label={`${product.name} detayını aç`}><div className={`product-art ${sprite || product.imageUrl ? "has-photo" : ""}`} style={artStyle(active, index, product)} aria-hidden="true">{!sprite && !product.imageUrl && <span>{product.name.slice(0, 2).toLocaleUpperCase("tr-TR")}</span>}{!sprite && !product.imageUrl && <small>FRANCO · {String(index + 1).padStart(2, "0")}</small>}{favorites.includes(product.id) && <b className="favorite-dot">♥</b>}</div><div className="product-info"><h3>{product.name}</h3><p>{product.status === "sold-out" ? "Bugün tükendi" : product.profile ?? active.eyebrow}</p><strong>{money.format(product.price)}</strong></div></button></article>)}</div><button className="next-chapter" onClick={() => selectCategory((activeIndex + 1) % liveMenu.length)}><span>Sıradaki bölüm</span><strong>{liveMenu[(activeIndex + 1) % liveMenu.length].name}</strong><b aria-hidden="true">→</b></button></section>
@@ -156,6 +155,30 @@ export default function Home() {
     <footer><div className="footer-seal"><span>F</span><small>EST. · 2024</small></div><div><p>Franco Coffee &amp; Gelato</p><small>Fiyatlara KDV dahildir. Alerjen bilgileri için ekibimize danışabilirsiniz.</small></div><a className="instagram-cta" href="https://www.instagram.com/francoserdivan/" target="_blank" rel="noreferrer" aria-label="Franco Serdivan Instagram hesabını aç"><span>Bizi Instagram’dan takip edin</span><strong>@francoserdivan</strong><b aria-hidden="true">↗</b></a></footer>
 
     {scene && <ProductScene item={scene} pair={pairingFor(scene)} favorites={favorites} close={() => setScene(null)} select={setScene} toggleFavorite={toggleFavorite} />}
+    {panel === "experiences" && <section className="experience-room experiences-room" role="dialog" aria-modal="true" aria-label="Franco deneyimleri">
+      <RoomNav title="FRANCO · DENEYİMLER" close={() => setPanel(null)} />
+      <div className="experience-hub">
+        <header><small>Menünün ötesinde</small><h2>Franco’yu keşfet</h2><p>Lezzetini bul, dondurmanı oluştur veya favorilerini yanında tut.</p></header>
+        <div className="experience-strip experience-strip-room">
+          <button data-mark="F" onClick={() => openPanel("journey")}><small>01 · Sana özel</small><strong>Lezzet Yolculuğu</strong><span>Üç dokunuşta Franco seçimin</span></button>
+          <button data-mark="G" onClick={() => openPanel("composer")}><small>02 · Kendi lezzetin</small><strong>Dondurmanı Oluştur</strong><span>Lezzetlerini seç, uyumunu yarat</span></button>
+          <button data-mark="P" onClick={() => openPanel("passport")}><small>03 · Senin Franco’n</small><strong>Franco Passport</strong><span>{favorites.length ? `${favorites.length} favorin kayıtlı` : "Favorilerini yanında tut"}</span></button>
+        </div>
+      </div>
+    </section>}
+    {panel === "gallery" && <section className="experience-room gallery-room" role="dialog" aria-modal="true" aria-label="Tüm Franco ürünleri">
+      <RoomNav title="FRANCO · TÜM ÜRÜNLER" close={() => setPanel(null)} />
+      <div className="gallery-shell">
+        <header><small>71 lezzet · tek galeri</small><h2>Diğer Ürünler</h2><p>Tüm Franco menüsü, aynı ölçüde ve kolay taranan tek akışta.</p></header>
+        <div className="product-gallery">{galleryProducts.map(item => <article key={`${item.category.id}-${item.product.id}`} className={item.product.status === "sold-out" ? "is-sold-out" : ""}>
+          <button onClick={() => { setPanel(null); setScene(item); }} aria-label={`${item.product.name} detayını aç`}>
+            <span className="gallery-art" style={artStyle(item.category, item.index, item.product)} aria-hidden="true">{!sprites[item.category.id] && !item.product.imageUrl ? item.product.name.slice(0, 2).toLocaleUpperCase("tr-TR") : ""}</span>
+            <span className="gallery-copy"><small>{categoryLabel(item.category.name)}</small><strong>{item.product.name}</strong><em>{item.product.status === "sold-out" ? "Bugün tükendi" : item.product.profile ?? item.category.eyebrow}</em></span>
+            <b>{money.format(item.product.price)}</b>
+          </button>
+        </article>)}</div>
+      </div>
+    </section>}
     {panel === "journey" && <section className="experience-room journey-room" role="dialog" aria-modal="true" aria-label="Franco Lezzet Yolculuğu"><RoomNav title="FRANCO · LEZZET YOLCULUĞU" close={() => setPanel(null)} />{!journeyResult ? <div className="journey-step"><small>0{journeyStep + 1} / 03</small><div className="journey-progress"><i style={{ width: `${(journeyStep + 1) * 33.333}%` }} /></div><h2>{journeyQuestions[journeyStep].title}</h2><div className="journey-options">{journeyQuestions[journeyStep].options.map(([label, value]) => <button key={value} onClick={() => answerJourney(journeyQuestions[journeyStep].key, value)}>{label}<span>→</span></button>)}</div></div> : <div className="journey-result"><small>Franco senin için seçti</small><h2>{journeyResult.product.name}</h2><p>Bugünkü ritmine ve damak zevkine en yakın Franco seçimi.</p><strong>{money.format(journeyResult.product.price)}</strong><button onClick={() => { setPanel(null); setScene(journeyResult); }}>Ürünü sahneye al →</button><button className="text-button" onClick={() => { setJourneyStep(0); setAnswers({}); setJourneyResult(null); }}>Baştan dene</button></div>}</section>}
     {panel === "composer" && <section className="experience-room composer-room" role="dialog" aria-modal="true" aria-label="Dondurmanı Oluştur">
       <RoomNav title="FRANCO · DONDURMANI OLUŞTUR" close={() => setPanel(null)} />
