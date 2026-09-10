@@ -23,8 +23,8 @@ const products = (items: Array<[string, number]>): Product[] => items.map(([name
 // 25 Ağustos 2026 tarihinde Franco'nun QRall menüsünden aktarıldı.
 export const menu: Category[] = [
   { id: "tatlilar", name: "Tatlılar", eyebrow: "Tatlı bir mola", icon: "TL", products: products([
-    ["Dondurmalı Brownie",400],["Belçika Çikolatalı Brownie",400],["San Sabastian",360],
-    ["Belçika Çikolatalı Profiretol",400],["Dubai Cup",360],["Nutella Cookies",360],
+    ["Dondurmalı Brownie",400],["Belçika Çikolatalı Brownie",400],["San Sebastian",360],
+    ["Belçika Çikolatalı Profiterol",400],["Dubai Cup",360],["Nutella Cookies",360],
     ["Spoonful Cup",350],["Tiramisu",350],["Franco Snickers",350],["Çilekli Magnolia",350],["Lotus Küre",360]
   ])},
   { id: "soguk-kahveler", name: "Iced Espresso Bar", eyebrow: "Buz gibi espresso", icon: "IE", products: products([
@@ -34,7 +34,7 @@ export const menu: Category[] = [
   { id: "dondurma", name: "Dondurma", eyebrow: "Franco gelato", icon: "GL", products: products([
     ["Sütlü",80],["Kakao",80],["Karamel",80],["Tahin",80],["İtalyan Karameli",80],["Bal Badem",80],
     ["Vişne",80],["Çilek",80],["Oreo",80],["Kavun",80],["Limon",80],["Yeşil Elma",80],
-    ["İncir&Ceviz",80],["Lotus",80],["Böğürtlen",80],["Antep Fıstığı",80],["Nutella",80],["Belçika Çikolatası",80]
+    ["İncir&Ceviz",80],["Lotus",80],["Böğürtlen",80],["Antep Fıstığı",80],["Nutella",80],["Belçika Çikolatası",80],["Portakallı",80]
   ])},
   { id: "summer-edition", name: "Kokteyl", eyebrow: "Franco imza içecekleri", icon: "KT", products: products([
     ["Franco Mango",250],["Rooibos Peach",250]
@@ -42,7 +42,7 @@ export const menu: Category[] = [
   { id: "sicak-kahveler", name: "Espresso Bar", eyebrow: "Espresso temelli kahveler", icon: "EB", products: products([
     ["Espresso",130],["Double Espresso",150],["Americano",180],["Latte",210],["Flat White",190],
     ["Cappuccino",210],["Cortado",180],["Vanilla Latte",220],["Caramel Latte",220],
-    ["Toffienut Latte",220],["Mocha",220],["White Chocolate Mocha",220],["Affagato",230]
+    ["Toffienut Latte",220],["Mocha",220],["White Chocolate Mocha",220],["Affogato",230]
   ])},
   { id: "brew-bar", name: "Brew Bar", eyebrow: "Demleme kahveler", icon: "BR", products: products([
     ["Türk Kahvesi",150],["Double Türk Kahvesi",225],["Filtre Kahve",170],["Ice Filtre Kahve",170]
