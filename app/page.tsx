@@ -62,7 +62,8 @@ const scoopPalettes: Record<string, [string, string, string]> = {
   "Böğürtlen": ["#70466f", "#38263e", "#aa78a8"],
   "Antep Fıstığı": ["#93aa67", "#52673a", "#cbd89f"],
   "Nutella": ["#a96849", "#562d24", "#dda782"],
-  "Belçika Çikolatası": ["#4c271f", "#24120f", "#86503e"]
+  "Belçika Çikolatası": ["#4c271f", "#24120f", "#86503e"],
+  "Portakallı": ["#ed9a3a", "#bd5f1d", "#ffd083"]
 };
 
 function scoopStyle(flavor: string, index: number): CSSProperties {
