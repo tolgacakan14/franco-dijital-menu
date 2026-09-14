@@ -13,7 +13,34 @@ const productImages: Record<string, string> = {
   "Roma 66": "/products/generated/summer-edition/roma-66.jpg",
   "Cool lime 2.0": "/products/generated/summer-edition/cool-lime-2.jpg",
   "Metropolitan": "/products/generated/summer-edition/metropolitan.jpg",
-  "Narsist": "/products/generated/summer-edition/narsist.jpg"
+  "Narsist": "/products/generated/summer-edition/narsist.jpg",
+  "Fire Classic": "/products/generated/fire-classic.jpg",
+  "Adrenalin Burger": "/products/generated/adrenalin.jpg",
+  "Guaca Burger": "/products/generated/guaca-burger.jpg",
+  "Three Mushroom": "/products/generated/mushroom-burger.jpg",
+  "Basic Child Burger": "/products/generated/basic-child.jpg",
+  "Crunchicken": "/products/generated/crunchicken.jpg",
+  "Cafe de Pari Burger": "/products/generated/cafe-de-paris.jpg",
+  "Louisiana Chicken Taste": "/products/generated/louisiana-chicken-taste.jpg",
+  "Smash Taste": "/products/generated/smash-taste.jpg",
+  "Mozzarella Topları": "/products/generated/mozzarella-bar.jpg",
+  "Trüflü Parmesan Patates Kızartması": "/products/generated/french-fries.jpg",
+  "Panna Cotta": "/products/generated/panna-cotta.jpg"
+};
+
+const fireHandDetails: Record<string, Pick<Product, "description" | "profile" | "pairing">> = {
+  "Fire Classic": { profile: "Burger · klasik", description: "Dana köfte, cheddar, karamelize soğan, turşu ve trüf mayonez.", pairing: "Cola" },
+  "Adrenalin Burger": { profile: "Burger · acı", description: "Dana köfte, cheddar, karamelize soğan ve acı sos.", pairing: "Cola" },
+  "Guaca Burger": { profile: "Burger · avokado", description: "Dana köfte, cheddar, avokado sos ve trüf mayonez.", pairing: "Cola" },
+  "Three Mushroom": { profile: "Burger · mantar", description: "Dana köfte, kaburga füme, mantar sos ve trüf mayonez.", pairing: "Cola" },
+  "Basic Child Burger": { profile: "Burger · sade", description: "Dana köfte ve cheddar ile sade burger.", pairing: "Cola" },
+  "Crunchicken": { profile: "Burger · çıtır tavuk", description: "Çıtır tavuk, cheddar, coleslaw ve özel sos.", pairing: "Cola" },
+  "Cafe de Pari Burger": { profile: "Burger · soslu", description: "Dana köfte, cheddar ve karamelize soğan; Cafe de Pari sunumuyla.", pairing: "Cola" },
+  "Louisiana Chicken Taste": { profile: "Taco · tavuk", description: "Tavuk eti, Louisiana sos, kırmızı soğan ve kibrit patates.", pairing: "Cola" },
+  "Smash Taste": { profile: "Taco · dana", description: "Dana köfte, kırmızı soğan, parmesan-lime ve kibrit patates.", pairing: "Cola" },
+  "Mozzarella Topları": { profile: "Yan ürün · çıtır", description: "Çıtır kaplamalı dört mozzarella topu.", pairing: "Cola" },
+  "Trüflü Parmesan Patates Kızartması": { profile: "Yan ürün · patates", description: "Trüflü parmesan ve frenk soğanlı patates kızartması.", pairing: "Cola" },
+  "Panna Cotta": { profile: "Tatlı · sütlü", description: "Meyve sosuyla servis edilen panna cotta.", pairing: "Americano" }
 };
 
 const products = (items: Array<[string, number | null]>): Product[] => items.map(([name, price], index) => ({
@@ -22,7 +49,8 @@ const products = (items: Array<[string, number | null]>): Product[] => items.map
   price,
   imageIndex: index,
   imageUrl: productImages[name],
-  ...productKnowledge[name]
+  ...productKnowledge[name],
+  ...(fireHandDetails[name] ?? {})
 }));
 
 // 25 Ağustos 2026 tarihinde Franco'nun QRall menüsünden aktarıldı.
@@ -65,5 +93,19 @@ export const menu: Category[] = [
   ])},
   { id: "sicak-icecekler", name: "Hot", eyebrow: "Sıcak içecekler", icon: "HT", products: products([
     ["Çay",70],["Fincan Çay",100]
+  ])},
+  { id: "fire-hand", name: "x Fire Hand", eyebrow: "Fire Hand mutfağından", icon: "FH", products: products([
+    ["Fire Classic",null],
+    ["Adrenalin Burger",null],
+    ["Guaca Burger",null],
+    ["Three Mushroom",null],
+    ["Basic Child Burger",null],
+    ["Crunchicken",null],
+    ["Cafe de Pari Burger",null],
+    ["Louisiana Chicken Taste",null],
+    ["Smash Taste",null],
+    ["Mozzarella Topları",null],
+    ["Trüflü Parmesan Patates Kızartması",null],
+    ["Panna Cotta",null]
   ])}
 ];

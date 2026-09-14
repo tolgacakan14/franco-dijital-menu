@@ -32,7 +32,7 @@ const journeyQuestions = [
 ] as const;
 
 function artStyle(category: Category, index: number, product?: Product) {
-  if (product?.imageUrl) return { backgroundImage: `url(${product.imageUrl})`, backgroundSize: "cover", backgroundPosition: "center" };
+  if (product?.imageUrl) return { backgroundImage: `url(${product.imageUrl})`, backgroundSize: "cover", backgroundPosition: category.id === "fire-hand" ? "center 74%" : "center" };
   const sprite = sprites[category.id];
   if (!sprite) return undefined;
   const imageIndex = product?.imageIndex ?? index;
