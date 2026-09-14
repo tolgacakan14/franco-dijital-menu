@@ -45,7 +45,7 @@ export const menu: Category[] = [
     ["Franco Mango",250],["Rooibos Peach",250]
   ])},
   { id: "summer-edition-drinks", name: "Summer Edition", eyebrow: "Yaza özel içecekler", icon: "SE", products: products([
-    ["Roma 66",null],["Cool lime 2.0",null],["Metropolitan",null],["Narsist",null]
+    ["Roma 66",250],["Cool lime 2.0",250],["Metropolitan",250],["Narsist",250]
   ])},
   { id: "sicak-kahveler", name: "Espresso Bar", eyebrow: "Espresso temelli kahveler", icon: "EB", products: products([
     ["Espresso",130],["Double Espresso",150],["Americano",180],["Latte",210],["Flat White",190],
