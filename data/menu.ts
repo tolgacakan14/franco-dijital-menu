@@ -1,7 +1,7 @@
 import { productKnowledge } from "./menu-intelligence";
 
 export type ProductStatus = "active" | "sold-out";
-export type Product = { id: string; name: string; price: number; description?: string; profile?: string; intensity?: 1 | 2 | 3 | 4; pairing?: string; tags?: string[]; badge?: string; status?: ProductStatus; imageIndex?: number; imageUrl?: string };
+export type Product = { id: string; name: string; price: number | null; description?: string; profile?: string; intensity?: 1 | 2 | 3 | 4; pairing?: string; tags?: string[]; badge?: string; status?: ProductStatus; imageIndex?: number; imageUrl?: string };
 export type Category = { id: string; name: string; eyebrow: string; icon: string; products: Product[] };
 
 const productImages: Record<string, string> = {
@@ -9,10 +9,14 @@ const productImages: Record<string, string> = {
   "Belçika Çikolatası": "/products/generated/gelato-belcika-cikolatasi-v2.jpg",
   "Portakallı": "/products/generated/gelato-portakalli-v2.jpg",
   "Nutella Cookies": "/products/generated/nutella-cookies-v3.jpg",
-  "Franco Snickers": "/products/generated/franco-snickers-v2.jpg"
+  "Franco Snickers": "/products/generated/franco-snickers-v2.jpg",
+  "Roma 66": "/products/generated/summer-edition/roma-66.jpg",
+  "Cool lime 2.0": "/products/generated/summer-edition/cool-lime-2.jpg",
+  "Metropolitan": "/products/generated/summer-edition/metropolitan.jpg",
+  "Narsist": "/products/generated/summer-edition/narsist.jpg"
 };
 
-const products = (items: Array<[string, number]>): Product[] => items.map(([name, price], index) => ({
+const products = (items: Array<[string, number | null]>): Product[] => items.map(([name, price], index) => ({
   id: `${name.toLocaleLowerCase("tr-TR").replace(/[^a-z0-9çğıöşü]+/gi, "-").replace(/^-|-$/g, "")}-${index}`,
   name,
   price,
@@ -39,6 +43,9 @@ export const menu: Category[] = [
   ])},
   { id: "summer-edition", name: "Kokteyl", eyebrow: "Franco imza içecekleri", icon: "KT", products: products([
     ["Franco Mango",250],["Rooibos Peach",250]
+  ])},
+  { id: "summer-edition-drinks", name: "Summer Edition", eyebrow: "Yaza özel içecekler", icon: "SE", products: products([
+    ["Roma 66",null],["Cool lime 2.0",null],["Metropolitan",null],["Narsist",null]
   ])},
   { id: "sicak-kahveler", name: "Espresso Bar", eyebrow: "Espresso temelli kahveler", icon: "EB", products: products([
     ["Espresso",130],["Double Espresso",150],["Americano",180],["Latte",210],["Flat White",190],

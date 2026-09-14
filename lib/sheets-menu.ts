@@ -62,7 +62,7 @@ export function menuFromCsv(csv: string): Category[] {
       ...fallbackProduct,
       id: get(row, "ürün_kodu") || fallbackProduct?.id || `${categoryId}-${productName}`,
       name: productName,
-      price: numberValue(get(row, "fiyat"), fallbackProduct?.price ?? 0),
+      price: get(row, "fiyat") === "" ? null : numberValue(get(row, "fiyat"), fallbackProduct?.price ?? 0),
       description: get(row, "açıklama") || fallbackProduct?.description,
       profile: get(row, "tat_profili") || fallbackProduct?.profile,
       pairing: get(row, "eşleşme") || fallbackProduct?.pairing,
