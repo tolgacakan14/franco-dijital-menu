@@ -28,19 +28,19 @@ const productImages: Record<string, string> = {
   "Panna Cotta": "/products/generated/panna-cotta.jpg"
 };
 
-const fireHandDetails: Record<string, Pick<Product, "description" | "profile" | "pairing">> = {
-  "Fire Classic": { profile: "Burger · klasik", description: "Dana köfte, cheddar, karamelize soğan, turşu ve trüf mayonez.", pairing: "Cola" },
-  "Adrenalin Burger": { profile: "Burger · acı", description: "Dana köfte, cheddar, karamelize soğan ve acı sos.", pairing: "Cola" },
-  "Guaca Burger": { profile: "Burger · avokado", description: "Dana köfte, cheddar, avokado sos ve trüf mayonez.", pairing: "Cola" },
-  "Three Mushroom": { profile: "Burger · mantar", description: "Dana köfte, kaburga füme, mantar sos ve trüf mayonez.", pairing: "Cola" },
-  "Basic Child Burger": { profile: "Burger · sade", description: "Dana köfte ve cheddar ile sade burger.", pairing: "Cola" },
-  "Crunchicken": { profile: "Burger · çıtır tavuk", description: "Çıtır tavuk, cheddar, coleslaw ve özel sos.", pairing: "Cola" },
-  "Cafe de Pari Burger": { profile: "Burger · soslu", description: "Dana köfte, cheddar ve karamelize soğan; Cafe de Pari sunumuyla.", pairing: "Cola" },
-  "Louisiana Chicken Taste": { profile: "Taco · tavuk", description: "Tavuk eti, Louisiana sos, kırmızı soğan ve kibrit patates.", pairing: "Cola" },
-  "Smash Taste": { profile: "Taco · dana", description: "Dana köfte, kırmızı soğan, parmesan-lime ve kibrit patates.", pairing: "Cola" },
-  "Mozzarella Topları": { profile: "Yan ürün · çıtır", description: "Çıtır kaplamalı dört mozzarella topu.", pairing: "Cola" },
-  "Trüflü Parmesan Patates Kızartması": { profile: "Yan ürün · patates", description: "Trüflü parmesan ve frenk soğanlı patates kızartması.", pairing: "Cola" },
-  "Panna Cotta": { profile: "Tatlı · sütlü", description: "Meyve sosuyla servis edilen panna cotta.", pairing: "Americano" }
+const fireHandDetails: Record<string, Pick<Product, "profile" | "pairing">> = {
+  "Fire Classic": { profile: "Burger · klasik", pairing: "Cola" },
+  "Adrenalin Burger": { profile: "Burger · acı", pairing: "Cola" },
+  "Guaca Burger": { profile: "Burger · avokado", pairing: "Cola" },
+  "Three Mushroom": { profile: "Burger · mantar", pairing: "Cola" },
+  "Basic Child Burger": { profile: "Burger · sade", pairing: "Cola" },
+  "Crunchicken": { profile: "Burger · çıtır tavuk", pairing: "Cola" },
+  "Cafe de Pari Burger": { profile: "Burger · soslu", pairing: "Cola" },
+  "Louisiana Chicken Taste": { profile: "Taco · tavuk", pairing: "Cola" },
+  "Smash Taste": { profile: "Taco · dana", pairing: "Cola" },
+  "Mozzarella Topları": { profile: "Yan ürün · çıtır", pairing: "Cola" },
+  "Trüflü Parmesan Patates Kızartması": { profile: "Yan ürün · patates", pairing: "Cola" },
+  "Panna Cotta": { profile: "Tatlı · sütlü", pairing: "Americano" }
 };
 
 const products = (items: Array<[string, number | null]>): Product[] => items.map(([name, price], index) => ({
