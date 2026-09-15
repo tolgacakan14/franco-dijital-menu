@@ -7,7 +7,7 @@ export async function GET() {
   const sheetUrl = process.env.GOOGLE_SHEETS_MENU_CSV_URL;
   if (!sheetUrl) return Response.json({ menu, source: "local" }, { headers: { "Cache-Control": "no-store" } });
   try {
-    const response = await fetch(sheetUrl, { cache: "no-store", signal: AbortSignal.timeout(5000) });
+    const liveSheetUrl = new URL(sheetUrl);\n    liveSheetUrl.searchParams.set("_", Date.now().toString());\n    const response = await fetch(liveSheetUrl, { cache: "no-store", signal: AbortSignal.timeout(5000) });
     if (!response.ok) throw new Error(`Google Sheets ${response.status} yanıtı verdi.`);
     const liveMenu = menuFromCsv(await response.text());
     if (!liveMenu.length) throw new Error("Google Sheets geçerli ürün döndürmedi.");
