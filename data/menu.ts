@@ -14,6 +14,8 @@ const productImages: Record<string, string> = {
   "Cool lime 2.0": "/products/generated/summer-edition/cool-lime-2.jpg",
   "Metropolitan": "/products/generated/summer-edition/metropolitan.jpg",
   "Narsist": "/products/generated/summer-edition/narsist.jpg",
+  "Franco Mango": "/franco-mango-0.png",
+  "Rooibos Peach": "/rooibos-peach-1.png",
   "Fire Classic": "/products/generated/fire-classic.jpg",
   "Adrenalin Burger": "/products/generated/adrenalin.jpg",
   "Guaca Burger": "/products/generated/guaca-burger.jpg",
