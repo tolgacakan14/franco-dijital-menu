@@ -60,7 +60,7 @@ export const menu: Category[] = [
   { id: "tatlilar", name: "Tatlılar", eyebrow: "Tatlı bir mola", icon: "TL", products: products([
     ["Dondurmalı Brownie",400],["Belçika Çikolatalı Brownie",400],["San Sebastian",360],
     ["Belçika Çikolatalı Profiterol",400],["Dubai Cup",360],["Nutella Cookies",360],
-    ["Spoonful Cup",350],["Tiramisu",350],["Franco Snickers",350],["Çilekli Magnolia",350],["Lotus Küre",360]
+    ["Spoonful Cup",350],["Tiramisu",350],["Franco Snickers",350],["Çilekli Magnolia",350],["Lotus Cup",360]
   ])},
   { id: "soguk-kahveler", name: "Iced Espresso Bar", eyebrow: "Buz gibi espresso", icon: "IE", products: products([
     ["Ice Latte",220],["Ice Americano",220],["Ice Caramel Latte",240],["Ice Vanilla Latte",240],
