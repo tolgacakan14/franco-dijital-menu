@@ -16,6 +16,7 @@ const productImages: Record<string, string> = {
   "Narsist": "/products/generated/summer-edition/narsist.jpg",
   "Franco Mango": "/franco-mango-0.png",
   "Rooibos Peach": "/rooibos-peach-1.png",
+  "Lotus Cup": "/lotuscup.png",
   "Fire Classic": "/products/generated/fire-classic.jpg",
   "Adrenalin Burger": "/products/generated/adrenalin.jpg",
   "Guaca Burger": "/products/generated/guaca-burger.jpg",
