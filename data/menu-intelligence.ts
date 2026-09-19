@@ -57,7 +57,7 @@ export const productKnowledge: Record<string, ProductKnowledge> = {
   "Belçika Çikolatalı Brownie": { description: "Belirgin çikolata yoğunluğu, nemli doku ve uzun kakao bitişi.", profile: "Yoğun çikolata", intensity: 4, pairing: "Cortado" },
   "San Sebastian": { description: "Karamelize yüzey ile kremamsı peynir dokusunun tatlı–tuzlu dengesi.", profile: "Kremamsı · karamelize", intensity: 3, pairing: "Türk Kahvesi" },
   "Belçika Çikolatalı Profiterol": { description: "Profiterol dokusunu daha koyu ve baskın çikolata karakteri tamamlar.", profile: "Koyu kakao · krema", intensity: 4, pairing: "Espresso" },
-  "Dubai Cup": { description: "Çikolata ve fıstık ekseninde yoğun, kavruk ve dokulu bir kup.", profile: "Çikolata · fıstık", intensity: 4, pairing: "Double Espresso" },
+  "Dubai Cup": { description: "Krema ve bisküvi katmanlarının üzerini Belçika çikolatası sosu tamamlar.", profile: "Çikolata · katmanlı", intensity: 4, pairing: "Double Espresso" },
   "Nutella Cookies": { description: "Kalın, yumuşak pişmiş cookie diliminde akışkan fındık-kakao dolgusu ve sütlü çikolata parçaları.", profile: "Fındık-kakao · yumuşak cookie", intensity: 4, pairing: "Filtre Kahve" },
   "Spoonful Cup": { description: "Kaşıkla açılan yumuşak katmanlarıyla kremamsı ve dolgun bir kup.", profile: "Kremamsı · katmanlı", intensity: 3, pairing: "Ice Americano" },
   "Tiramisu": { description: "Kahve, kakao ve kremamsı yapının acı–tatlı dengesine dayanan İtalyan klasiği.", profile: "Kahve · kakao", intensity: 3, pairing: "Espresso" },
