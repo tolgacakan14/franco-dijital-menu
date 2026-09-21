@@ -164,6 +164,24 @@ footer .instagram-cta { grid-column: 1 / -1; width: 100%; display: grid; grid-te
 
 .passport-room::before { content: "F"; position: fixed; right: -50px; top: 85px; width: 190px; height: 190px; display: grid; place-items: center; border: 1px solid rgba(181,121,76,.12); border-radius: 50%; color: rgba(181,121,76,.07); font: italic 120px/1 Georgia,serif; }.passport-head { position: relative; z-index: 1; max-width: 700px; margin: auto; padding: 70px 22px 40px; }.passport-head h2 { margin: 8px 0 13px; }.passport-head p { color: rgba(56,36,31,.58); font-size: 12px; }.passport-list { position: relative; z-index: 1; max-width: 700px; margin: auto; padding: 0 22px 60px; }.passport-list > p { padding: 50px 0; border-top: 1px solid rgba(56,36,31,.2); color: rgba(56,36,31,.5); font: italic 18px/1.5 Georgia,serif; text-align: center; }.passport-list button { width: 100%; display: grid; grid-template-columns: 1fr auto; padding: 17px 0; border: 0; border-bottom: 1px solid rgba(56,36,31,.18); background: transparent; text-align: left; }.passport-list span { grid-column: 1/-1; color: var(--sun); font-size: 8px; text-transform: uppercase; }.passport-list strong { margin-top: 4px; font: 20px Georgia,serif; }.passport-list b { align-self: end; font-size: 10px; }
 
+
+.menu-credit { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(243,234,216,.12); color: rgba(243,234,216,.42); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
+.menu-credit strong { color: rgba(243,234,216,.68); font-weight: 700; }
+.menu-credit button { padding: 0; border: 0; border-bottom: 1px solid rgba(201,173,148,.42); background: transparent; color: #c9ad94; font: 700 8px/1.5 Arial,sans-serif; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
+.menu-credit button:hover, .menu-credit button:focus-visible { color: var(--paper); border-bottom-color: var(--paper); }
+.contact-backdrop { position: fixed; inset: 0; z-index: 90; display: grid; place-items: end center; padding: 18px; background: rgba(34,10,13,.68); backdrop-filter: blur(8px); animation: contact-fade .2s ease; }
+.contact-card { position: relative; width: min(100%,440px); overflow: hidden; padding: 34px 28px 27px; border: 1px solid rgba(213,173,104,.42); border-radius: 18px; background: linear-gradient(145deg,#521c21,#311014); color: var(--paper); box-shadow: 0 25px 70px rgba(18,5,7,.42); animation: contact-rise .28s cubic-bezier(.2,.8,.2,1); }
+.contact-card::after { content: "TM"; position: absolute; right: -12px; bottom: -25px; color: rgba(213,173,104,.07); font: italic 96px/1 Georgia,serif; pointer-events: none; }
+.contact-card > small { color: #c9ad94; font: 700 8px/1 Arial,sans-serif; letter-spacing: .2em; }
+.contact-card h2 { margin: 14px 0 9px; color: #f4dfc8; font: italic 38px/1 Georgia,serif; font-weight: 400; }
+.contact-card p { max-width: 290px; margin: 0 0 28px; color: rgba(243,234,216,.6); font: 11px/1.6 Arial,sans-serif; }
+.contact-card a { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 14px 0 5px; border-top: 1px solid rgba(213,173,104,.34); color: var(--paper); font: 700 10px/1.2 Arial,sans-serif; letter-spacing: .06em; text-decoration: none; text-transform: uppercase; }
+.contact-card a span { color: #c9ad94; font-size: 20px; transition: transform .2s ease; }
+.contact-card a:hover span { transform: translate(4px,-4px); }
+.contact-close { position: absolute; right: 15px; top: 14px; width: 32px; height: 32px; border: 1px solid rgba(243,234,216,.2); border-radius: 50%; background: transparent; color: var(--paper); font: 20px/1 Arial,sans-serif; cursor: pointer; }
+@keyframes contact-fade { from { opacity: 0; } }
+@keyframes contact-rise { from { opacity: 0; transform: translateY(28px); } }
+
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes chapter-in { from { opacity: 0; transform: translateY(14px); } }
 @keyframes marquee { to { transform: translateX(-50%); } }
@@ -202,6 +220,8 @@ footer .instagram-cta { grid-column: 1 / -1; width: 100%; display: grid; grid-te
   .menu-board { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 55px 30px; }
   footer { grid-template-columns: auto 1fr; align-items: center; padding: 65px max(40px, calc((100vw - 900px) / 2)); }
   footer .instagram-cta { grid-column: 1 / -1; margin-top: 28px; }
+  .contact-backdrop { place-items: center; }
+  .menu-credit { margin-top: 22px; }
   .rhythm-card { grid-template-columns: 1fr auto; align-items: end; padding: 45px max(42px,calc((100vw - 1040px)/2)); }
   .experience-strip { grid-auto-flow: initial; grid-template-columns: repeat(3,1fr); padding: 18px max(42px,calc((100vw - 1040px)/2)) 28px; }
   .experience-strip > button { min-height: 190px; }
