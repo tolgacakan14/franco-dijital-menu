@@ -18,6 +18,10 @@ const productImages: Record<string, string> = {
   "Rooibos Peach": "/rooibos-peach-1.png",
   "Lotus Cup": "/products/generated/lotus-cup-v2.jpg",
   "Dubai Cup": "/products/generated/dubai-cup-chocolate-v2.jpg",
+  "Ihlamur": "/products/generated/ihlamur.png",
+  "Salep": "/products/generated/salep.png",
+  "Sıcak Çikolata": "/products/generated/sicak-cikolata.png",
+  "Affogato": "/products/generated/affogato.png",
   "Fire Classic": "/products/generated/fire-classic.jpg",
   "Adrenalin Burger": "/products/generated/adrenalin.jpg",
   "Guaca Burger": "/products/generated/guaca-burger.jpg",
@@ -96,7 +100,7 @@ export const menu: Category[] = [
     ["Su",60],["Sade Soda",80],["Sıkma Limon Soda",100],["Churchill",100]
   ])},
   { id: "sicak-icecekler", name: "Hot", eyebrow: "Sıcak içecekler", icon: "HT", products: products([
-    ["Çay",70],["Fincan Çay",100]
+    ["Çay",70],["Fincan Çay",100],["Ihlamur",200],["Salep",200],["Sıcak Çikolata",200]
   ])},
   { id: "fire-hand", name: "x Fire Hand", eyebrow: "Fire Hand mutfağından", icon: "FH", products: products([
     ["Fire Classic",null],
